@@ -1,7 +1,4 @@
 AppliGeoLoc
 ===========
 
-Appli Android de géolocalisation de son contact
-
-
-lalal
+Appli Android de géolocalisation de ses contacts
