@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
@@ -17,6 +18,8 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+
+import java.util.Calendar;
 
 
 public class CreateContact_Activity extends Activity {
@@ -34,8 +37,10 @@ public class CreateContact_Activity extends Activity {
         Bcreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                threadCreate DOC = new threadCreate();
+                EditText login = (EditText) findViewById(R.id.T_Login);
+                EditText password = (EditText) findViewById(R.id.T_Pwd);
+                threadCreate async = new threadCreate();
+                async.execute(login.getText().toString(), password.getText().toString());
 
             }
         });
@@ -49,9 +54,17 @@ public class CreateContact_Activity extends Activity {
     public class threadCreate extends AsyncTask<String, Void, String> {
         protected String doInBackground(String... params) {
             // http://www.pierredavy.com/addnew.php
-           /*   http://train.sandbox.eutech-ssii.com/messenger/login.php?email=%@&password=%@     */
+           /*   http://pierredavy.com/addnew.php?login=login&password=mdp&token=1&update=2014/12/02&coordonnees=12:23    */
+
+
+
+            Calendar rightNow = Calendar.getInstance();
+            //System.out.println(rightNow.get(Calendar.DAY_OF_MONTH)+"/"+rightNow.get(Calendar.MONTH)+"/"+rightNow.get(Calendar.YEAR));
+
+
             Uri.Builder uri = new Uri.Builder();
-            uri.scheme("http").authority("pierredavy.com").appendPath("addnew.php").appendQueryParameter("email", params[0]).appendQueryParameter("password", params[1]);
+            uri.scheme("http").authority("pierredavy.com").appendPath("addnew.php").appendQueryParameter("login", params[0]).appendQueryParameter("password", params[1]).appendQueryParameter("token", params[2])
+                    .appendQueryParameter("update", params[3]).appendQueryParameter("coordonnees", params[4]);
             String url = uri.build().toString();
             // String url = "http://train.sandbox.eutech-ssii.com/messenger/login.php?email=test1@test.fr&password=test";
             String result = null;

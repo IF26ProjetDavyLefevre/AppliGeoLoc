@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/editText4"
+        android:id="@+id/T_Pwd"
         android:layout_marginTop="31dp"
         android:layout_below="@+id/T_Login"
         android:layout_centerHorizontal="true" />
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:text="Créer!"
         android:id="@+id/Bcreate_send"
-        android:layout_below="@+id/editText4"
+        android:layout_below="@+id/T_Pwd"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="73dp" />
 </RelativeLayout>
