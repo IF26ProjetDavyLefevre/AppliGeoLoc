@@ -5,7 +5,7 @@ android {
     buildToolsVersion "20.0.0"
 
     defaultConfig {
-        applicationId "com.example.pierre.projetif26"
+        applicationId "com.example.pierre.if26davylefevre"
         minSdkVersion 15
         targetSdkVersion 21
         versionCode 1

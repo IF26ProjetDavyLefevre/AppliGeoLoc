@@ -1,4 +1,4 @@
-package com.example.pierre.projetif26;
+package com.example.pierre.if26davylefevre;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
