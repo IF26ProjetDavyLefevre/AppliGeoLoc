@@ -8,7 +8,7 @@ $parameters = array
     'password' => null,
     'token'=>null,
     'update'=>null,
-    'coordonnees'=>null
+    'latitude'=>null
 );
 
 $db = new BDD();
@@ -19,28 +19,18 @@ foreach ($_GET as $key => $value) {
 }
 
 
-//http://pierredavy.com/addnew.php?login=login&password=mdp&token=1&update=2014/12/02&coordonnees=12:23
+//http://pierredavy.com/addnew.php?login=login&password=mdp&token=1&update=2014/12/02&latitude=12&longitude=34&altitude=56&precision=78
 
 $login = $parameters['login'];
 $mdp = $parameters['password'];
 $token = $parameters['token'];
 $update = $parameters['update'];
-$coordonnees = $parameters['coordonnees'];
+$latitude = $parameters['latitude'];
+$longitude = $parameters['longitude'];
+$altitude = $parameters['altitude'];
+$precision = $parameters['precision'];
 print_r($parameters);
 
-
-
-
-//latitude , longitude, altitude, précision
-
-
-
-/*
-$login = "login";
-$mdp = "mdp";
-$token = "1";
-$update = "2014/12/02";
-$coordonnees = "12:23";*/
-
-$db->AddNewUser($login, $mdp, $token, $update, $coordonnees);
+//$db->AddNewUser('$login', '$mdp', '$token', '$update', '$latitude','$longitude','$altitude','$precision');
+$db->AddNewUser($login, $mdp, $token, $update, $latitude,$longitude,$altitude,$precision);
 ?>

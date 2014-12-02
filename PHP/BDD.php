@@ -1,8 +1,8 @@
 <?php
 
-//$BDD = new BDD();
-//$BDD->DB();
-//$BDD->find();
+$BDD = new BDD();
+$BDD->DB();
+$BDD->AddNewUser('login', 'mdp', '1222', '2014-12-02', '12', '23', '34', '45');
 
 class BDD {
 
@@ -31,14 +31,21 @@ class BDD {
         $resultats->closeCursor();
     }
 
-    public function AddNewUser($login, $mdp, $token, $update, $coordonnees) {
-        $req = $this->pdo->prepare('INSERT INTO User(login,password, token, last_update,coordonnees) VALUES(:login, :password, :token, :last_update, :coordonnees)');
+    public function AddNewUser($login, $mdp, $token, $update, $latitude, $longitude, $altitude, $precision) {
+        echo $login . "   " . $mdp . "   " . $token . "   " . $update . "   " . $latitude . "   " . $longitude . "   " . $altitude . "   " . $precision;
+        //marce mais c'est pas un prepare
+        //$this->pdo->query("INSERT INTO User VALUES('login', 'mdp', '1222', '2014-12-02', '12', '23', '34', '45')");
+        $sql = 'INSERT INTO User (login,password, token, last_update, latitude, longitude, altitude, precision) VALUES(:login, :password, :token, :last_update, :latitude, :longitude, :altitude, :precision)';
+        $req = $this->pdo->prepare($sql);
         $result = $req->execute(array(
             'login' => $login,
             'password' => $mdp,
             'token' => $token,
             'last_update' => $update,
-            'coordonnees' => $coordonnees
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+            'altitude' => $altitude,
+            'precision' => $precision
         ));
         if (!$result) {
             return false;
