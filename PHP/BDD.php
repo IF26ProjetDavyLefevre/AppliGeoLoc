@@ -32,29 +32,20 @@ class BDD {
     }
 
     public function AddNewUser($login, $mdp, $token, $update, $coordonnees) {
-        $req2 = $bdd->prepare('INSERT INTO photos(id,loginproprietaire, description, path) VALUES(:id, :loginproprietaire, :description, :path)');
-                    $req->execute(array(
-                        'login' => $login,
-                        'mdp' => $mdp,
-                        'nom' => $nom,
-                        'prenom' => $prenom,
-                        'naissance' => $naissance,
-                        'sexe' => $sexe,
-                        'photo' => $photo,
-                        'branche' => $branche,
-                        'semestre' => $semestre,
-                        'netu' => $netu,
-                        'mail' => $mail,
-                        'competences' => $competences,
-                        'reputation' => "100"
-                    ));
-
-                    $req2->execute(array(
-                        'id' => '',
-                        'loginproprietaire' => $login,
-                        'description' => "",
-                        'path' => $photo
-                    ));
+       // $sql ="INSERT INTO User VALUES('".$login."','".$mdp."','".$token."','".$update."','".$coordonnees."')";
+        //echo $sql;
+        //$resultats = $this->pdo->query($sql);
+        $req = $this->pdo->prepare('INSERT INTO User(login,password, token, last_update,coordonnees) VALUES(:login, :password, :token, :last_update, :coordonnees)');
+        $result = $req->execute(array(
+            'login' => $login,
+            'password' => $mdp,
+            'token' => $token,
+            'last_update' => $update,
+            'coordonnees' => $coordonnees
+        ));
+        if (!$result) {
+            return false;
+        }
     }
 
     public function search($class, $table, $where, $whereArgs = array()) {
