@@ -32,9 +32,6 @@ class BDD {
     }
 
     public function AddNewUser($login, $mdp, $token, $update, $coordonnees) {
-       // $sql ="INSERT INTO User VALUES('".$login."','".$mdp."','".$token."','".$update."','".$coordonnees."')";
-        //echo $sql;
-        //$resultats = $this->pdo->query($sql);
         $req = $this->pdo->prepare('INSERT INTO User(login,password, token, last_update,coordonnees) VALUES(:login, :password, :token, :last_update, :coordonnees)');
         $result = $req->execute(array(
             'login' => $login,
