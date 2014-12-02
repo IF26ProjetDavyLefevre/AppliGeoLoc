@@ -9,6 +9,8 @@ $parameters = array
     'token'=>null,
     'update'=>null,
     'latitude'=>null
+    
+    //ajouer les nouvelles valeurs
 );
 
 $db = new BDD();
