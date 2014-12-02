@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ProjetIF26</string>
+    <string name="action_settings">Settings</string>
+    <string name="login">Login </string>
+    <string name="pw">Pwd </string>
+    <string name="hello">Connectez vous</string>
+    <string name="val">Connect </string>
+    <string name="title_activity_second">SecondActivity</string>
+    <string name="page2">2eme page!</string>
+    <string name="listView">liste</string>
+    <string name="title_activity_page3">page3</string>
+    <string name="hello_world">Hello world!</string>
+
+</resources>

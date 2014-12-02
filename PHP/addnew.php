@@ -13,4 +13,5 @@ $coordonnees="12:23";
 
 $newuser =$db->insert("User",$table,$login,$mdp,$token,$update,$coordonnees);
 
+
 ?>

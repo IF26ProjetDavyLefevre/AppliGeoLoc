@@ -31,30 +31,34 @@ class BDD {
         $resultats->closeCursor();
     }
 
+    public function AddNewUser($login, $mdp, $token, $update, $coordonnees) {
+        $req2 = $bdd->prepare('INSERT INTO photos(id,loginproprietaire, description, path) VALUES(:id, :loginproprietaire, :description, :path)');
+                    $req->execute(array(
+                        'login' => $login,
+                        'mdp' => $mdp,
+                        'nom' => $nom,
+                        'prenom' => $prenom,
+                        'naissance' => $naissance,
+                        'sexe' => $sexe,
+                        'photo' => $photo,
+                        'branche' => $branche,
+                        'semestre' => $semestre,
+                        'netu' => $netu,
+                        'mail' => $mail,
+                        'competences' => $competences,
+                        'reputation' => "100"
+                    ));
+
+                    $req2->execute(array(
+                        'id' => '',
+                        'loginproprietaire' => $login,
+                        'description' => "",
+                        'path' => $photo
+                    ));
+    }
+
     public function search($class, $table, $where, $whereArgs = array()) {
         
-    }
- 
-    public function insert($login, $mdp, $token, $update, $coordonnees) {
-        $fields = '';
-        $values = '';
-        $whereArgs = array();
-        foreach ($model->toDB() as $name => $value) {
-            if ($fields != '') {
-                $fields .= ', ';
-                $values .= ', ';
-            }
-            $fields .= $name;
-            $values .= ":$name";
-            $whereArgs[":$name"] = $value;
-        }
-        $sql = "INSERT INTO $table ($fields) VALUES ($values)";
-        $pdoStatement = $this->pdo->prepare($sql);
-        $result = $pdoStatement->execute($whereArgs);
-        if (!$result) {
-            return false;
-        }
-        return $this->pdo->lastInsertId();
     }
 
     public function update($model, $table, $where, $whereArgs = array()) {
