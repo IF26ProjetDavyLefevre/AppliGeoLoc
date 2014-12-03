@@ -6,11 +6,13 @@ $parameters = array
     (
     'login' => null,
     'password' => null,
-    'token'=>null,
-    'update'=>null,
-    'latitude'=>null
-    
-    //ajouer les nouvelles valeurs
+    'token' => null,
+    'update' => null,
+    'latitude' => null,
+    'longitude' => null,
+    'altitude' => null,
+    'precise' => null
+        
 );
 
 $db = new BDD();
@@ -30,9 +32,9 @@ $update = $parameters['update'];
 $latitude = $parameters['latitude'];
 $longitude = $parameters['longitude'];
 $altitude = $parameters['altitude'];
-$precision = $parameters['precision'];
+$precise = $parameters['$precise'];
 print_r($parameters);
 
 //$db->AddNewUser('$login', '$mdp', '$token', '$update', '$latitude','$longitude','$altitude','$precision');
-$db->AddNewUser($login, $mdp, $token, $update, $latitude,$longitude,$altitude,$precision);
+$db->AddNewUser($login, $mdp, $token, $update, $latitude, $longitude, $altitude, $precise);
 ?>

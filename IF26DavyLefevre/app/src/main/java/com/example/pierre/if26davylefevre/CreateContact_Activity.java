@@ -48,7 +48,7 @@ public class CreateContact_Activity extends Activity {
                 EditText login = (EditText) findViewById(R.id.T_Login);
                 EditText password = (EditText) findViewById(R.id.T_Pwd);
                 threadCreate async = new threadCreate();
-                async.execute(login.getText().toString(), password.getText().toString(),"1",date,"39:45");
+                async.execute(login.getText().toString(), password.getText().toString(),"1",date,"39","45","67","89");
 
             }
         });
@@ -65,7 +65,7 @@ public class CreateContact_Activity extends Activity {
            /*   http://pierredavy.com/addnew.php?login=login&password=mdp&token=1&update=2014/12/02&coordonnees=12:23    */
             Uri.Builder uri = new Uri.Builder();
             uri.scheme("http").authority("pierredavy.com").appendPath("addnew.php").appendQueryParameter("login", params[0]).appendQueryParameter("password", params[1]).appendQueryParameter("token", params[2])
-                    .appendQueryParameter("update", params[3]).appendQueryParameter("coordonnees", params[4]);
+                    .appendQueryParameter("update", params[3]).appendQueryParameter("latitude", params[4]).appendQueryParameter("longitude", params[5]).appendQueryParameter("altitude", params[6]).appendQueryParameter("precise", params[7]);
             String url = uri.build().toString();
 
             String result = null;
