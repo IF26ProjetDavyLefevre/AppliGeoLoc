@@ -20,7 +20,7 @@
 	$precision = 45;
 	
 	$sql = 'INSERT INTO User (login, password, token, last_update, latitude, longitude, altitude, precision) VALUES(:login, :password, :token, :last_update, :latitude, :longitude, :altitude, :precision)';
-	$req = bdd->prepare($sql);
+	$req = $bdd->prepare($sql);
 	try{
 		$result = $req->execute(array(
 			':login' => $login,
