@@ -10,21 +10,22 @@ $json = array(
     'error' => true
 );
 
-print_r($parameters);
-
 $db = new BDD();
 $db->DB();
 
-$sql = "SELECT token FROM User WHERE login = '" . $parameters[':login'] . "' AND password = '" . $parameters[':password']."'";
-echo $sql;
-$req = $db->pdo->prepare($sql);
-$result = $req->execute($whereArgs);
+// http://pierredavy.com/login.php?login=davypier&password=if26
+
+$sql = "SELECT login,token FROM User WHERE login = '" . $parameters[':login'] . "' AND password = '" . $parameters[':password'] . "'";
+print_r($sql);
+$req = $db->pdo->query($sql);
+$result = $req->fetch();
+
 
 if ($result !== false) {
 
     $json = array(
         'error' => false,
-        'token' => $token
+        'user' => $result
     );
 }
 
