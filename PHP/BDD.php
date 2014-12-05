@@ -15,7 +15,7 @@ $BDD->AddNewUser($login, $mdp, $token, $update, $latitude, $longitude, $altitude
 
 class BDD {
 
-    private $pdo;
+    public $pdo;
     private $host_name = "db554207254.db.1and1.com";
     private $database = "db554207254";
     private $dsn = 'mysql:dbname=db554207254;host=db554207254.db.1and1.com';
