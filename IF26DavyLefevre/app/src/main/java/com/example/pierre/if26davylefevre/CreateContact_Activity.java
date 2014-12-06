@@ -36,26 +36,22 @@ public class CreateContact_Activity extends Activity {
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
-        final String date= year+"-"+month+"-"+day;
-        Log.d("date:",date);
+        final String date = year + "-" + month + "-" + day;
+        Log.d("date:", date);
 
         Button Bcreate = (Button) findViewById(R.id.Bcreate_send);
-
-
         Bcreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EditText login = (EditText) findViewById(R.id.T_Login);
                 EditText password = (EditText) findViewById(R.id.T_Pwd);
                 threadCreate async = new threadCreate();
-                async.execute(login.getText().toString(), password.getText().toString(),"1",date,"39","45","67","89");
+                async.execute(login.getText().toString(), password.getText().toString(), "1", date, "39", "45", "67", "89");
 
             }
         });
 
     }
-
-
 
 
     //Thread pour la requete vers la base de données.
@@ -67,6 +63,7 @@ public class CreateContact_Activity extends Activity {
             uri.scheme("http").authority("pierredavy.com").appendPath("addnew.php").appendQueryParameter("login", params[0]).appendQueryParameter("password", params[1]).appendQueryParameter("token", params[2])
                     .appendQueryParameter("update", params[3]).appendQueryParameter("latitude", params[4]).appendQueryParameter("longitude", params[5]).appendQueryParameter("altitude", params[6]).appendQueryParameter("precise", params[7]);
             String url = uri.build().toString();
+            Log.d("url: ", url);
 
             String result = null;
             try {
@@ -76,6 +73,17 @@ public class CreateContact_Activity extends Activity {
             } catch (Exception e) {
                 Log.e("httpGet ", e.toString(), e);
             }
+
+            Log.d("result", result);
+
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText(CreateContact_Activity.this, "Compte Créé !", Toast.LENGTH_LONG).show();
+                }
+            });
+
+            Intent backtoStart = new Intent(getApplicationContext(),Login.class);
+            startActivity(backtoStart);
 
             return result;
         }
