@@ -55,6 +55,7 @@ class BDD {
         if (!$result) {
             return false;
         }
+        
     }
 
     public function search($class, $table, $where, $whereArgs = array()) {

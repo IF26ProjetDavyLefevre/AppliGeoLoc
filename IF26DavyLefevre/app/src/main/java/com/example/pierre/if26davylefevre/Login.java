@@ -73,7 +73,7 @@ public class Login extends Activity {
             //debug dans la console
             Log.d("Result   : ",result);
 
-            String JSONResult[] ={"lala"} , JSONToken[];
+            String JSONResult[] , JSONToken[];
             String resultArray[] = result.split(",");
                 JSONResult = resultArray[0].split(":");
 
