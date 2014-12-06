@@ -16,11 +16,11 @@ $db->DB();
 // http://pierredavy.com/login.php?login=davypier&password=if26
 
 $sql = "SELECT login,token FROM User WHERE login = '" . $parameters[':login'] . "' AND password = '" . $parameters[':password'] . "'";
-print_r($sql);
+//print_r($sql);
 $req = $db->pdo->query($sql);
-$result = $req->fetch();
+$result = $req->fetch(PDO::FETCH_ASSOC);
 
-
+//print_r($result);
 if ($result !== false) {
 
     $json = array(

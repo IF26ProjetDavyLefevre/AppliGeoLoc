@@ -23,6 +23,10 @@
             android:name="com.example.pierre.if26davylefevre.CreateContact_Activity"
             android:label="@string/title_activity_create_contact_" >
         </activity>
+        <activity
+            android:name="com.example.pierre.if26davylefevre.MainPage"
+            android:label="@string/title_activity_main_page" >
+        </activity>
     </application>
 
 </manifest>
