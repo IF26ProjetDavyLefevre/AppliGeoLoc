@@ -16,7 +16,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 
-
+// Cette classe sert de récipient pour les onglets
 public class MainPage extends Activity {
 
 
@@ -44,6 +44,8 @@ public class MainPage extends Activity {
         actionBar.addTab(tab2);
 
     }
+
+    
 
     public class MyTabListener implements ActionBar.TabListener {
         Fragment fragment;
