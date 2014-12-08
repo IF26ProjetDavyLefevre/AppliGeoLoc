@@ -6,5 +6,18 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_create_contact_">CreateContact_Activity</string>
     <string name="title_activity_main_page">MainPage</string>
+    <string name="title_activity_tab">TabActivity</string>
+    <string name="title_activity_activite_tab">ActiviteTab</string>
+    <string name="title_activity_activity__tab_contact">Activity_TabContact</string>
+    <string name="title_activity_activity__tab_map">Activity_TabMap</string>
+    <string name="title_activity_aze">aze</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="label1">one</string>
+    <string name="label2">two</string>
+    <string name="body1">Page1</string>
+    <string name="body2">Page2</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
