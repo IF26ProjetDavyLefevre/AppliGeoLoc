@@ -45,7 +45,7 @@ public class MainPage extends Activity {
 
     }
 
-    
+
 
     public class MyTabListener implements ActionBar.TabListener {
         Fragment fragment;
