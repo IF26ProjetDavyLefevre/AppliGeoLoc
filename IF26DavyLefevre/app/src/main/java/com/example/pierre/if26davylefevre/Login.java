@@ -38,7 +38,6 @@ public class Login extends Activity {
                 EditText password = (EditText) findViewById(R.id.T_password);
                 threadActivity DOC = new threadActivity();
                 DOC.execute(login.getText().toString(), password.getText().toString());
-
             }
         });
 

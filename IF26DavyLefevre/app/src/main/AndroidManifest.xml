@@ -25,12 +25,6 @@
         <activity
             android:name="com.example.pierre.if26davylefevre.MainPage"
             android:label="@string/title_activity_main_page" />
-        <activity
-            android:name="com.example.pierre.if26davylefevre.Activity_TabContact"
-            android:label="@string/title_activity_activity__tab_contact"></activity>
-        <activity
-            android:name="com.example.pierre.if26davylefevre.Activity_TabMap"
-            android:label="@string/title_activity_activity__tab_map"></activity>
 
     </application>
 
