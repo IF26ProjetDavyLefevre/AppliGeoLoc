@@ -38,6 +38,7 @@ public class Tab2Fragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
         m.onResume();
     }
 

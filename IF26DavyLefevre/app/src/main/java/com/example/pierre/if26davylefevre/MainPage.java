@@ -23,6 +23,7 @@ public class MainPage extends Activity {
     ActionBar.Tab tab1, tab2, tab3;
     Fragment fragmentTab1 = new Tab1Fragment();
     Fragment fragmentTab2 = new Tab2Fragment();
+    Fragment fragmentTab3 = new Tab3Fragment();
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,14 +35,17 @@ public class MainPage extends Activity {
 
         tab1 = actionBar.newTab().setText("Contacts");
         tab2 = actionBar.newTab().setText("Map");
+        tab3 = actionBar.newTab().setText("Param");
 
 
         tab1.setTabListener(new MyTabListener(fragmentTab1));
         tab2.setTabListener(new MyTabListener(fragmentTab2));
+        tab3.setTabListener(new MyTabListener(fragmentTab3));
 
 
         actionBar.addTab(tab1);
         actionBar.addTab(tab2);
+        actionBar.addTab(tab3);
 
     }
 

@@ -12,6 +12,6 @@
     <string name="body1">Page1</string>
     <string name="body2">Page2</string>
     <string name="mapKey">AIzaSyCI-v0iFwA1PqR6xMTKciq88IP-hM1FeO0</string>
-
+    <string name="title_activity_tab3_fragment">Tab3Fragment</string>
 
 </resources>
