@@ -1,17 +1,18 @@
 package com.example.pierre.if26davylefevre;
 
 import android.app.Activity;
+import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -31,6 +32,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.LocationSource;
@@ -45,16 +47,22 @@ import com.google.android.maps.OverlayItem;
 public class Tab2Fragment extends Fragment implements LocationListener{
 
     MapView map;
-    private LocationManager locationManager;
+    private LocationManager lm;
     private String provider;
     int lat;
     int lng;
-    //LocationOverlay  myLocOverlay;
+    public String message="Hello";
+    Location location;
+
+    Context mContext;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // inflat and return the layout
+
         View v = inflater.inflate(R.layout.fragment_tab2, container, false);
         map = (MapView) v.findViewById(R.id.mapView);
         map.onCreate(savedInstanceState);
@@ -89,6 +97,11 @@ public class Tab2Fragment extends Fragment implements LocationListener{
 
     @Override
     public void onLocationChanged(Location location) {
+        String message = String.format(
+                "New Location \n Longitude: %1$s \n Latitude: %2$s",
+                location.getLongitude(), location.getLatitude()
+        );
+        Log.d("message2: ",message);
 
     }
 
