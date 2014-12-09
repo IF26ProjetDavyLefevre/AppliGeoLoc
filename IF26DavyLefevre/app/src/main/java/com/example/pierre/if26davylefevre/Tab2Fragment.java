@@ -55,7 +55,7 @@ public class Tab2Fragment extends Fragment implements LocationListener{
     int lat;
     int lng;
     public String message="Hello";
-    Location location;
+    //Location location;
 
     Context mContext;
 
@@ -68,7 +68,7 @@ public class Tab2Fragment extends Fragment implements LocationListener{
 
 
 
-    @Override
+    //@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // inflat and return the layout
@@ -77,7 +77,6 @@ public class Tab2Fragment extends Fragment implements LocationListener{
         if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER))
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, this);
         lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0, this);
-
 
         View v = inflater.inflate(R.layout.fragment_tab2, container, false);
         map = (MapView) v.findViewById(R.id.mapView);
@@ -119,7 +118,7 @@ public class Tab2Fragment extends Fragment implements LocationListener{
 
         String msg = "New location : Latitude = "+latitude+", Longitude = "+longitude+", Altitude = "+altitude+", Accuracy = "+accuracy;
         Log.d("msg : ", msg);
-
+        //Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
     }
 
     @Override
