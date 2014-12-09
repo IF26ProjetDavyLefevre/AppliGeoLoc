@@ -17,6 +17,9 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/mapView" />
+        android:id="@+id/mapView"
+        android:apiKey="AIzaSyCI-v0iFwA1PqR6xMTKciq88IP-hM1FeO0"/>
+
+
 
 </FrameLayout>
