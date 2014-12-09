@@ -2,6 +2,10 @@ package com.example.pierre.if26davylefevre;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,13 +28,24 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 
-public class CreateContact_Activity extends Activity {
+public class CreateContact_Activity extends Activity implements LocationListener {
+
+    private LocationManager lm;
+
+    private double latitude;
+    private double longitude;
+    private double altitude;
+    private float accuracy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_contact_);
 
+        lm = (LocationManager) this.getSystemService(LOCATION_SERVICE);
+        if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER))
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, this);
+        lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0, this);
 
         Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
@@ -46,13 +61,49 @@ public class CreateContact_Activity extends Activity {
                 EditText login = (EditText) findViewById(R.id.T_Login);
                 EditText password = (EditText) findViewById(R.id.T_Pwd);
                 threadCreate async = new threadCreate();
-                async.execute(login.getText().toString(), password.getText().toString(), "1", date, "39", "45", "67", "89");
+                async.execute(login.getText().toString(), password.getText().toString(), "1", date, String.valueOf(latitude) , String.valueOf(longitude), String.valueOf(altitude), String.valueOf(accuracy));
 
             }
         });
 
     }
 
+    public void onLocationChanged(Location location) {
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+        altitude = location.getAltitude();
+        accuracy = location.getAccuracy();
+
+        String msg = "New location : Latitude = "+latitude+", Longitude = "+longitude+", Altitude = "+altitude+", Accuracy = "+accuracy;
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+    }
+
+    public void onProviderDisabled(String provider) {
+        String msg = "Provider disabled : "+provider;
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    public void onProviderEnabled(String provider) {
+        String msg = "Provider enabled : "+provider;
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+        String newStatus = "";
+        switch (status) {
+            case LocationProvider.OUT_OF_SERVICE:
+                newStatus = "OUT_OF_SERVICE";
+                break;
+            case LocationProvider.TEMPORARILY_UNAVAILABLE:
+                newStatus = "TEMPORARILY_UNAVAILABLE";
+                break;
+            case LocationProvider.AVAILABLE:
+                newStatus = "AVAILABLE";
+                break;
+        }
+        String msg = "Provider disabled : "+provider+", New Status"+newStatus;
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
 
     //Thread pour la requete vers la base de données.
     public class threadCreate extends AsyncTask<String, Void, String> {
