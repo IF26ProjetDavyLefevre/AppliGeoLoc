@@ -101,6 +101,7 @@ public class CreateContact_Activity extends Activity implements LocationListener
                 newStatus = "AVAILABLE";
                 break;
         }
+
         String msg = "Provider disabled : "+provider+", New Status"+newStatus;
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }

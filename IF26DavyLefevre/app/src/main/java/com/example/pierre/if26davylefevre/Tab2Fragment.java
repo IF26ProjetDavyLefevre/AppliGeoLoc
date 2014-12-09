@@ -65,6 +65,7 @@ public class Tab2Fragment extends Fragment implements LocationListener{
     private double longitude;
     private double altitude;
     private float accuracy;
+    private Marker userMarker;
 
 
 
@@ -115,6 +116,8 @@ public class Tab2Fragment extends Fragment implements LocationListener{
         longitude = location.getLongitude();
         altitude = location.getAltitude();
         accuracy = location.getAccuracy();
+
+
 
         String msg = "New location : Latitude = "+latitude+", Longitude = "+longitude+", Altitude = "+altitude+", Accuracy = "+accuracy;
         Log.d("msg : ", msg);
