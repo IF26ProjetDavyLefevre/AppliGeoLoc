@@ -118,7 +118,7 @@ public class Tab2Fragment extends Fragment implements LocationListener{
 
         String msg = "New location : Latitude = "+latitude+", Longitude = "+longitude+", Altitude = "+altitude+", Accuracy = "+accuracy;
         Log.d("msg : ", msg);
-        //Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
     }
 
     @Override
