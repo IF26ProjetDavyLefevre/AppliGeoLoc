@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.google.android.gms.maps.CameraUpdate;
@@ -43,11 +45,12 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
+import java.util.Calendar;
+
 
 public class Tab2Fragment extends Fragment implements LocationListener{
 
     MapView map;
-    private LocationManager lm;
     private String provider;
     int lat;
     int lng;
@@ -56,6 +59,13 @@ public class Tab2Fragment extends Fragment implements LocationListener{
 
     Context mContext;
 
+    private LocationManager lm;
+
+    private double latitude;
+    private double longitude;
+    private double altitude;
+    private float accuracy;
+
 
 
     @Override
@@ -63,10 +73,15 @@ public class Tab2Fragment extends Fragment implements LocationListener{
                              Bundle savedInstanceState) {
         // inflat and return the layout
 
+        lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER))
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, this);
+        lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0, this);
+
+
         View v = inflater.inflate(R.layout.fragment_tab2, container, false);
         map = (MapView) v.findViewById(R.id.mapView);
         map.onCreate(savedInstanceState);
-
         return v;
     }
 
@@ -97,11 +112,13 @@ public class Tab2Fragment extends Fragment implements LocationListener{
 
     @Override
     public void onLocationChanged(Location location) {
-        String message = String.format(
-                "New Location \n Longitude: %1$s \n Latitude: %2$s",
-                location.getLongitude(), location.getLatitude()
-        );
-        Log.d("message2: ",message);
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+        altitude = location.getAltitude();
+        accuracy = location.getAccuracy();
+
+        String msg = "New location : Latitude = "+latitude+", Longitude = "+longitude+", Altitude = "+altitude+", Accuracy = "+accuracy;
+        Log.d("msg : ", msg);
 
     }
 
