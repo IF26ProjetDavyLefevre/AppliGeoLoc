@@ -19,6 +19,7 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -48,9 +49,8 @@ import com.google.android.maps.OverlayItem;
 import java.util.Calendar;
 
 
-public class Tab2Fragment extends Fragment implements LocationListener{
+public class Tab2Fragment extends MapFragment implements LocationListener, OnMapReadyCallback {
 
-    MapView map;
     private String provider;
     int lat;
     int lng;
@@ -67,46 +67,29 @@ public class Tab2Fragment extends Fragment implements LocationListener{
     private float accuracy;
 
 
-
-    //@Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // inflat and return the layout
-
-        lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER))
-            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, this);
-        lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0, this);
-
-        View v = inflater.inflate(R.layout.fragment_tab2, container, false);
-        map = (MapView) v.findViewById(R.id.mapView);
-        map.onCreate(savedInstanceState);
-        return v;
+    public void onMapReady(GoogleMap map) {
+        map.addMarker(new MarkerOptions()
+                .position(new LatLng(0, 0))
+                .title("Marker"));
     }
-
     @Override
     public void onResume() {
         super.onResume();
-
-        map.onResume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        map.onPause();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        map.onDestroy();
     }
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        map.onLowMemory();
     }
 
     @Override

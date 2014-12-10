@@ -17,13 +17,18 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 // Cette classe sert de récipient pour les onglets
 public class MainPage extends Activity {
 
 
     ActionBar.Tab tab1, tab2, tab3;
     Fragment fragmentTab1 = new Tab1Fragment();
-    Fragment fragmentTab2 = new Tab2Fragment();
+    MapFragment fragmentTab2 = new Tab2Fragment();
     Fragment fragmentTab3 = new Tab3Fragment();
 
 
@@ -47,9 +52,7 @@ public class MainPage extends Activity {
         actionBar.addTab(tab1);
         actionBar.addTab(tab2);
         actionBar.addTab(tab3);
-
     }
-
 
 
     public class MyTabListener implements ActionBar.TabListener {
