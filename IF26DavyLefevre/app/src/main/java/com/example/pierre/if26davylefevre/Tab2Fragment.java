@@ -71,6 +71,9 @@ public class Tab2Fragment extends MapFragment implements LocationListener, OnMap
         map.addMarker(new MarkerOptions()
                 .position(new LatLng(0, 0))
                 .title("Marker"));
+
+        String msg = "New location : Latitude = "+latitude+", Longitude = "+longitude+", Altitude = "+altitude+", Accuracy = "+accuracy;
+        Log.d("pos : ", msg);
     }
     @Override
     public void onResume() {
@@ -98,6 +101,9 @@ public class Tab2Fragment extends MapFragment implements LocationListener, OnMap
         longitude = location.getLongitude();
         altitude = location.getAltitude();
         accuracy = location.getAccuracy();
+
+        LatLng troyes= new LatLng(latitude,longitude);
+        getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(troyes,16));
 
 
         String msg = "New location : Latitude = "+latitude+", Longitude = "+longitude+", Altitude = "+altitude+", Accuracy = "+accuracy;
