@@ -59,7 +59,7 @@ public class Tab2Fragment extends MapFragment implements LocationListener {
     private double longitude;
     private double altitude;
     private float accuracy;
-    public GoogleMap map;
+    public GoogleMap Googlemap;
 
 
     @Override
@@ -97,6 +97,7 @@ public class Tab2Fragment extends MapFragment implements LocationListener {
         String msg = "New location : Latitude = "+latitude+", Longitude = "+longitude+", Altitude = "+altitude+", Accuracy = "+accuracy;
         Log.d("pos : ", msg);
     }
+
     @Override
     public void onResume() {
        // Log.d("resume : ", "resume");
