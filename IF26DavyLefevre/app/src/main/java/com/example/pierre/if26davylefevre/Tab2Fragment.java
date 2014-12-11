@@ -49,13 +49,7 @@ import com.google.android.maps.OverlayItem;
 import java.util.Calendar;
 
 
-public class Tab2Fragment extends MapFragment implements LocationListener, OnMapReadyCallback {
-
-    private String provider;
-    int lat;
-    int lng;
-    public String message="Hello";
-    //Location location;
+public class Tab2Fragment extends MapFragment implements LocationListener {
 
     Context mContext;
 
@@ -65,10 +59,38 @@ public class Tab2Fragment extends MapFragment implements LocationListener, OnMap
     private double longitude;
     private double altitude;
     private float accuracy;
+    public GoogleMap map;
 
 
-    public void onMapReady(GoogleMap map) {
-        map.addMarker(new MarkerOptions()
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        Location location = new Location("dummyprovider");
+        location.setLatitude(48.2989);
+        location.setLongitude(4.07806);
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+        altitude = location.getAltitude();
+        accuracy = location.getAccuracy();
+        //View rootView = inflater.inflate(R.layout.fragment_tab2, container, false);
+        String msg = "New location : Latitude = "+latitude+", Longitude = "+longitude+", Altitude = "+altitude+", Accuracy = "+accuracy;
+        Log.d("create : ", msg);
+
+        //LatLng troyes= new LatLng(latitude,longitude);
+        //this.getMap().setMapType(2);
+
+        GoogleMap m = getMap();
+        //m.getMyLocation();
+
+
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+
+
+   public void onMapReady(GoogleMap Gmap) {
+       Gmap.addMarker(new MarkerOptions()
                 .position(new LatLng(0, 0))
                 .title("Marker"));
 
@@ -77,6 +99,7 @@ public class Tab2Fragment extends MapFragment implements LocationListener, OnMap
     }
     @Override
     public void onResume() {
+       // Log.d("resume : ", "resume");
         super.onResume();
     }
 
