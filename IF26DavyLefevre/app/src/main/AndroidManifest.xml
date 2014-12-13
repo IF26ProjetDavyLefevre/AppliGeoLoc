@@ -23,7 +23,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.pierre.if26davylefevre.Login"
+            android:name=".Login"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,10 +32,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.pierre.if26davylefevre.CreateContact_Activity"
+            android:name=".CreateContact_Activity"
             android:label="@string/title_activity_create_contact_" />
         <activity
-            android:name="com.example.pierre.if26davylefevre.MainPage"
+            android:name=".MainPage"
             android:label="@string/title_activity_main_page" />
 
         <meta-data
@@ -43,8 +43,12 @@
             android:value="@string/mapKey" />
 
         <activity
-            android:name="com.example.pierre.if26davylefevre.Tab3Fragment"
+            android:name=".Tab3Fragment"
             android:label="@string/title_activity_tab3_fragment" >
+        </activity>
+        <activity
+            android:name=".Map_Activity"
+            android:label="@string/title_activity_map_" >
         </activity>
     </application>
 

@@ -51,6 +51,16 @@ public class Login extends Activity {
             }
         });
 
+        Button BGotoMap = (Button) findViewById(R.id.B_GotoMap);
+        BGotoMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent pageCreateUser = new Intent(getApplicationContext(),Map_Activity.class);
+                startActivity(pageCreateUser);
+            }
+        });
+
     }
 
     public class threadActivity extends AsyncTask<String, Void, String> {
