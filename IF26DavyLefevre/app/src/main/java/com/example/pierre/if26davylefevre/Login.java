@@ -1,7 +1,6 @@
 package com.example.pierre.if26davylefevre;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -40,12 +39,10 @@ public class Login extends Activity {
             }
         });
 
-
         Button Bcreate = (Button) findViewById(R.id.BCreate);
         Bcreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent pageCreateUser = new Intent(getApplicationContext(),CreateContact_Activity.class);
                 startActivity(pageCreateUser);
             }
@@ -55,7 +52,6 @@ public class Login extends Activity {
         BGotoMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent pageCreateUser = new Intent(getApplicationContext(),Map_Activity.class);
                 startActivity(pageCreateUser);
             }
@@ -65,6 +61,8 @@ public class Login extends Activity {
 
     public class threadActivity extends AsyncTask<String, Void, String> {
         protected String doInBackground(String... params) {
+            //C'est ici qu'il va falloir poser les bases de la sécurité concernant les données de connexion
+            //Salé le mdp, ...
             // http://pierredavy.com/login.php?login=davypier&password=if26
             Uri.Builder uri = new Uri.Builder();
             uri.scheme("http").authority("pierredavy.com").appendPath("login.php").appendQueryParameter("login", params[0]).appendQueryParameter("password", params[1]);
