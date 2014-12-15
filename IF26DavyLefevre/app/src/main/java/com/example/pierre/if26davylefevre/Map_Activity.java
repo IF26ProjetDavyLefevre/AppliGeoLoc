@@ -31,8 +31,7 @@ public class Map_Activity extends Activity implements LocationListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-        map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
-                .getMap();
+        map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
         map.setMyLocationEnabled(true);
 
         lm = (LocationManager) this.getSystemService(LOCATION_SERVICE);
