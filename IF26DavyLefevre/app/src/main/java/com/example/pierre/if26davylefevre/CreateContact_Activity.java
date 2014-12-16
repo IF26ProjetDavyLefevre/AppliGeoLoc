@@ -49,10 +49,11 @@ public class CreateContact_Activity extends Activity implements LocationListener
 
         Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
+        int month = c.get(Calendar.MONTH)+1;  // le mois de janvier est 0
         int day = c.get(Calendar.DAY_OF_MONTH);
         final String date = year + "-" + month + "-" + day;
         Log.d("date:", date);
+        //String token = ;
 
         Button Bcreate = (Button) findViewById(R.id.Bcreate_send);
         Bcreate.setOnClickListener(new View.OnClickListener() {

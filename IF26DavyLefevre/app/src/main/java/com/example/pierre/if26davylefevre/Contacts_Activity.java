@@ -29,6 +29,7 @@ import java.util.List;
 public class Contacts_Activity extends Activity {
 
     private String login;
+    private String token;
     String[][] tabContact;
     HashMap<String, String> element;
     List<HashMap<String, String>> liste;
@@ -43,10 +44,23 @@ public class Contacts_Activity extends Activity {
 
         Intent intent =getIntent();
         login = intent.getStringExtra("Login");
+        token = intent.getStringExtra("token");
+
+        //a supprimer
+        token ="123";
+
         listView = (ListView) findViewById(R.id.lVContact);
         liste = new ArrayList<HashMap<String, String>>();
         ThreadContactActivity contactTask = new ThreadContactActivity();
-        contactTask.execute(login);
+        contactTask.execute(login, token);
+
+        try {
+            synchronized (this) {
+                //on attend 3 secondes que la tâche asynchrone finisse son travail de récupération des noms
+                wait(3000);
+            }
+        } catch (InterruptedException ex) {
+        }
 
         adapter = new SimpleAdapter(myContext, liste, android.R.layout.simple_list_item_2,
                 new String[] {"text1", "text2"}, new int[] {android.R.id.text1, android.R.id.text2 });
@@ -57,11 +71,13 @@ public class Contacts_Activity extends Activity {
                 String loginContact = tabContact[position][2];
                 Intent map_Activity = new Intent(getApplicationContext(),Map_Activity.class);
                 map_Activity.putExtra("Login",login);
+                map_Activity.putExtra("token",token);
                 map_Activity.putExtra("LoginContact",loginContact);
                 startActivity(map_Activity);
             }
         });
 
+        // Go to activité paramètres
         Button btnParam = (Button) findViewById(R.id.btnParam);
         btnParam.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -71,6 +87,7 @@ public class Contacts_Activity extends Activity {
             }
         });
 
+        // Go to activité map
         Button btnMap = (Button) findViewById(R.id.btnMap);
         btnMap.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -81,11 +98,12 @@ public class Contacts_Activity extends Activity {
         });
     }
 
+    //thread  pour l'envoi de la requete
     public class ThreadContactActivity extends AsyncTask<String, Void, String> {
         protected String doInBackground(String... params){
             // http://pierredavy.com/login.php?login=davypier&password=if26
             Uri.Builder uri = new Uri.Builder();
-            uri.scheme("http").authority("pierredavy.com").appendPath("contacts.php").appendQueryParameter("login", params[0]);
+            uri.scheme("http").authority("pierredavy.com").appendPath("getrelations.php").appendQueryParameter("login", params[0]).appendQueryParameter("token", params[1]);
             String url = uri.build().toString();
             String content = null;
             try {
@@ -98,13 +116,13 @@ public class Contacts_Activity extends Activity {
             }
             try {
                 JSONObject contacts = new JSONObject(content);
-                JSONArray conv = contacts.getJSONArray("contacts");
+                JSONArray conv = contacts.getJSONArray("user");
                 tabContact = new String[conv.length()][3];
                 for (int i = 0; i < conv.length(); i ++){
 
-                    tabContact[i][0] = conv.getJSONObject(i).getJSONObject("contact").getString("login").toString();
-                    tabContact[i][1] = conv.getJSONObject(i).getJSONObject("contact").getString("email").toString();
-                    tabContact[i][2] = conv.getJSONObject(i).getString("id").toString();
+                    tabContact[i][0] = conv.getJSONObject(i).getString("login").toString();
+                    tabContact[i][1] = conv.getJSONObject(i).getString("latitude").toString();
+                    tabContact[i][2] = conv.getJSONObject(i).getString("longitude").toString();
                 }
                 for(int i = 0 ; i < tabContact.length ; i++) {
                     element = new HashMap<String, String>();
@@ -112,11 +130,16 @@ public class Contacts_Activity extends Activity {
                     element.put("text2", tabContact[i][1]);
                     liste.add(element);
                 }
+                Log.d("liste :", liste.toString());
             }
+
             catch (Exception e){
                 Log.e("json ", e.toString(), e);
             }
             return content;
+
         }
+
     }
+
 }
