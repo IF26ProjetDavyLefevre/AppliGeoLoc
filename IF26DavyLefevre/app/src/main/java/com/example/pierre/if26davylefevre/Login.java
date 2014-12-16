@@ -17,6 +17,9 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class Login extends Activity {
@@ -71,7 +74,7 @@ public class Login extends Activity {
 
             String JSONResult[] , JSONToken[];
             String resultArray[] = result.split(",");
-                JSONResult = resultArray[0].split(":");
+            JSONResult = resultArray[0].split(":");
 
 
 
@@ -81,11 +84,20 @@ public class Login extends Activity {
 
             //Si les identifiants sont corrects, on lance l'activité 2
             if (JSONResult[1].equals("false")) {
+                JSONObject user;
+                try {
+                    user = new JSONObject(result);
+                    Intent mapActivity = new Intent(getApplicationContext(),Map_Activity.class);
+                    // token= JSONToken[1].substring(1, JSONToken[1].length() - 2);
+                    mapActivity.putExtra("Login",params[0]);
+                    mapActivity.putExtra("Token", user.getJSONObject("user").getString("token").toString());
+                    startActivity(mapActivity);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
-                Intent mapActivity = new Intent(getApplicationContext(),Map_Activity.class);
-               // token= JSONToken[1].substring(1, JSONToken[1].length() - 2);
-                mapActivity.putExtra("Login",params[0]);
-                startActivity(mapActivity);
+
+
             }
             // on affiche que les idéntifiants sont faux sinon
             else {
