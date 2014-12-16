@@ -26,6 +26,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 
 public class Map_Activity extends Activity implements LocationListener {
 
@@ -36,9 +38,8 @@ public class Map_Activity extends Activity implements LocationListener {
     private double altitude;
     private float accuracy;
     private Marker myPosition;
-    private Marker[] contactMarker;
+    private ArrayList<Marker> contactMarker;
     private LatLng me;
-    private LatLng[] contactLatLng;
     private String login;
     private Location location;
     private String token;
@@ -87,14 +88,18 @@ public class Map_Activity extends Activity implements LocationListener {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        contactLatLng = new LatLng[tabUser.length];
-        contactMarker = new Marker[tabUser.length];
+        contactMarker = new ArrayList<Marker>();
         Double latitudeContact;
         Double longitudeContact;
-        for(int i = 0; i <tabUser.length; i++ ) {
-            //latitudeContact = Double.parseDouble(tabUser[i][1]);
-            //longitudeContact = Double.parseDouble(tabUser[i][2]);
-            //contactLatLng[i] = new LatLng(latitudeContact, longitudeContact);
+        LatLng contact;
+        for(int i = 0; i < tabUser.length -1; i++ ) {
+            Log.d("i", i+"");
+            Log.d("Latitude :", tabUser[i][1]);
+            latitudeContact = Double.parseDouble(tabUser[i][1]);
+            longitudeContact = Double.parseDouble(tabUser[i][2]);
+            contact = new LatLng(latitudeContact, longitudeContact);
+            Marker marker = map.addMarker(new MarkerOptions().position(contact).title(""+tabUser[i][0]));
+            contactMarker.add(marker);
         }
         String msg = "Latitude ="+latitude+", Longitude = "+longitude;
         //Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
@@ -164,13 +169,16 @@ public class Map_Activity extends Activity implements LocationListener {
                 Log.d("Nombre de contact", " "+userArray.length());
                 for (int i = 0; i < userArray.length()-1; i ++){
                     tabUser[i][0] = userArray.getJSONObject(i+1).getString("login").toString();
-                    tabUser[i][1] = userArray.getJSONObject(i + 1).getString("latitude");
-                    tabUser[i][2] = userArray.getJSONObject(i + 1).getString("longitude");
+                    tabUser[i][1] = userArray.getJSONObject(i+1).getString("latitude").toString();
+                    tabUser[i][2] = userArray.getJSONObject(i+1).getString("longitude").toString();
                     Log.d("Contenu tabUser", "login : "+tabUser[i][0]+", latitude : "+tabUser[i][1]+", longitude : "+tabUser[i][2]);
                 }
                 latitude = Double.parseDouble(userArray.getJSONObject(0).getString("latitude").toString());
                 longitude = Double.parseDouble(userArray.getJSONObject(0).getString("longitude").toString());
                 Log.d("Infos","Login : "+login+", latitude : "+latitude+", longitude : "+longitude);
+
+                Log.d("Nombre de User :", ""+tabUser.length);
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
