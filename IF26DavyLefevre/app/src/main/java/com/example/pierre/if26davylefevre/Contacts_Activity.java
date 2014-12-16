@@ -62,6 +62,7 @@ public class Contacts_Activity extends Activity {
             }
         });
 
+        // Go to activité paramètres
         Button btnParam = (Button) findViewById(R.id.btnParam);
         btnParam.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -71,6 +72,7 @@ public class Contacts_Activity extends Activity {
             }
         });
 
+        // Go to activité map
         Button btnMap = (Button) findViewById(R.id.btnMap);
         btnMap.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -81,6 +83,7 @@ public class Contacts_Activity extends Activity {
         });
     }
 
+    //thread  pour l'envoi de la requete
     public class ThreadContactActivity extends AsyncTask<String, Void, String> {
         protected String doInBackground(String... params){
             // http://pierredavy.com/login.php?login=davypier&password=if26

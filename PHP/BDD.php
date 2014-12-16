@@ -3,15 +3,7 @@
 $BDD = new BDD();
 $BDD->DB();
 //$BDD->AddNewUser('login', 'mdp', '1222', '2014-12-02', 12, 23, 34, 45);
-/*$login = "login";
-$mdp = "mdp";
-$token = "1";
-$update = "2014/12/02";
-$latitude = "12";
-$longitude = "34";
-$altitude = "56";
-$precise = "1";
-$BDD->AddNewUser($login, $mdp, $token, $update, $latitude, $longitude, $altitude, $precise);*/
+
 class BDD {
 
     public $pdo;
