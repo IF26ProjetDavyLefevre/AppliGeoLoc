@@ -81,7 +81,7 @@ public class Map_Activity extends Activity implements LocationListener {
 
         location = new Location("MySelf");
         // on thread la récupération des informations de l'utilisateur
-        ThreadMapActivity DOC = new ThreadMapActivity();
+        ThreadCreateMapActivity DOC = new ThreadCreateMapActivity();
         DOC.execute(login, token);
         try {
             synchronized (this){
@@ -125,18 +125,9 @@ public class Map_Activity extends Activity implements LocationListener {
         myPosition.setPosition(me);
 
         //maj des coordonnées (latitude, longitude) dans la base
-        Uri.Builder uri = new Uri.Builder();
-        uri.scheme("http").authority("pierredavy.com").appendPath("updateLatLong.php").appendQueryParameter("login", login)
-                .appendQueryParameter("latitude", ""+latitude).appendQueryParameter("longitude", ""+longitude);
-        String url = uri.build().toString();
-        String result = null;
-        try {
-            HttpClient HTTPCLlient = new DefaultHttpClient();
-            HttpResponse HTTPResponse = HTTPCLlient.execute(new HttpGet(url));
-            result = EntityUtils.toString(HTTPResponse.getEntity(), "utf8");
-        } catch (Exception e) {
-            Log.e("httpGet ", e.toString(), e);
-        }
+        ThreadUpdatePositionMapActivity TUPMA = new ThreadUpdatePositionMapActivity();
+        TUPMA.execute(login, ""+latitude, ""+longitude);
+
         //Log.d("Result   : ",result);
         //String msg = "Latitude ="+latitude+", Longitude = "+longitude;
         //Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
@@ -159,7 +150,7 @@ public class Map_Activity extends Activity implements LocationListener {
     }
 
 
-    public class ThreadMapActivity extends AsyncTask<String, Void, String> {
+    public class ThreadCreateMapActivity extends AsyncTask<String, Void, String> {
         protected String doInBackground(String... params) {
             // http://pierredavy.com/login.php?login=davypier&password=if26
             //Il faudra modifier le appendPath pour qu'il aille taper sur le bon fichier php et penser au fait qu'il faudra aussi
@@ -197,5 +188,24 @@ public class Map_Activity extends Activity implements LocationListener {
             return result;
         }
 
+    }
+
+    private class ThreadUpdatePositionMapActivity extends AsyncTask<String, Void, String> {
+        protected String doInBackground(String... params) {
+            Uri.Builder uri = new Uri.Builder();
+            uri.scheme("http").authority("pierredavy.com").appendPath("updateLatLong.php").appendQueryParameter("login", params[0])
+                    .appendQueryParameter("latitude", params[1]).appendQueryParameter("longitude", params[2]);
+            String url = uri.build().toString();
+            String result = null;
+            try {
+                HttpClient HTTPCLlient = new DefaultHttpClient();
+                HttpResponse HTTPResponse = HTTPCLlient.execute(new HttpGet(url));
+                result = EntityUtils.toString(HTTPResponse.getEntity(), "utf8");
+            } catch (Exception e) {
+                Log.e("httpGet ", e.toString(), e);
+            }
+
+            return result;
+        }
     }
 }
