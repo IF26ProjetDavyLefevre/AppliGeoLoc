@@ -3,7 +3,7 @@
 $BDD = new BDD();
 $BDD->DB();
 //$BDD->AddNewUser('login', 'mdp', '1222', '2014-12-02', 12, 23, 34, 45);
-$login = "login";
+/*$login = "login";
 $mdp = "mdp";
 $token = "1";
 $update = "2014/12/02";
@@ -11,8 +11,7 @@ $latitude = "12";
 $longitude = "34";
 $altitude = "56";
 $precise = "1";
-$BDD->AddNewUser($login, $mdp, $token, $update, $latitude, $longitude, $altitude, $precise);
-
+$BDD->AddNewUser($login, $mdp, $token, $update, $latitude, $longitude, $altitude, $precise);*/
 class BDD {
 
     public $pdo;
@@ -41,7 +40,7 @@ class BDD {
     }
 
     public function AddNewUser($login, $mdp, $token, $update, $latitude, $longitude, $altitude, $precise) {
-        $req = $this->pdo->prepare('INSERT INTO User(login,password, token, last_update,latitude,longitude,altitude,precise) VALUES(:login, :password, :token, :last_update, :latitude, :longitude, :altitude, :precise)');
+        $req = $this->pdo->prepare('INSERT INTO User(login,password, token, last_update,latitude,longitude,altitude,precise,visible) VALUES(:login, :password, :token, :last_update, :latitude, :longitude, :altitude, :precise, :visible)');
         $result = $req->execute(array(
             'login' => $login,
             'password' => $mdp,
@@ -50,7 +49,8 @@ class BDD {
             ':latitude' => $latitude,
             ':longitude' => $longitude,
             ':altitude' => $altitude,
-            ':precise' => $precise
+            ':precise' => $precise,
+            ':visible' => 1
         ));
         if (!$result) {
             return false;
