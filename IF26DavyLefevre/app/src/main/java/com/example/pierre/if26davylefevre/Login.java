@@ -85,6 +85,7 @@ public class Login extends Activity {
                 Intent mapActivity = new Intent(getApplicationContext(),Map_Activity.class);
                // token= JSONToken[1].substring(1, JSONToken[1].length() - 2);
                 mapActivity.putExtra("Login",params[0]);
+                mapActivity.putExtra("Token", params[1]);
                 startActivity(mapActivity);
             }
             // on affiche que les idéntifiants sont faux sinon

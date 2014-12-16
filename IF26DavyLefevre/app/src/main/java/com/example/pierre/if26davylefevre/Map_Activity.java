@@ -22,6 +22,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -36,19 +37,22 @@ public class Map_Activity extends Activity implements LocationListener {
     private float accuracy;
     private Marker myPosition;
     private LatLng me;
-    private String strLogin;
+    private String login;
     private Location location;
+    private String token;
+    String[][] tabUser;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         Intent intent = getIntent();
-        strLogin = intent.getStringExtra("Login");
+        login = intent.getStringExtra("Login");
+        token = intent.getStringExtra("Token");
         Button btnContacts = (Button) findViewById(R.id.btnContacts);
         btnContacts.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent contacts_Activity = new Intent(getApplicationContext(),Contacts_Activity.class);
-                contacts_Activity.putExtra("Login",strLogin);
+                contacts_Activity.putExtra("Login",login);
                 startActivity(contacts_Activity);
             }
         });
@@ -57,7 +61,7 @@ public class Map_Activity extends Activity implements LocationListener {
         btnParam.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent param_Activity = new Intent(getApplicationContext(),Param_Activity.class);
-                param_Activity.putExtra("Login",strLogin);
+                param_Activity.putExtra("Login",login);
                 startActivity(param_Activity);
             }
         });
@@ -74,7 +78,7 @@ public class Map_Activity extends Activity implements LocationListener {
         location = new Location("MySelf");
         // on thread la récupération des informations de l'utilisateur
         ThreadMapActivity DOC = new ThreadMapActivity();
-        DOC.execute(strLogin);
+        DOC.execute(login, token);
         String msg = "Latitude ="+latitude+", Longitude = "+longitude;
         //Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         me = new LatLng(latitude,longitude);
@@ -121,7 +125,7 @@ public class Map_Activity extends Activity implements LocationListener {
             //Il faudra modifier le appendPath pour qu'il aille taper sur le bon fichier php et penser au fait qu'il faudra aussi
             // aller chercher la liste des contacts de l'utilisateur en question et récupérer leurs coordonnées
             Uri.Builder uri = new Uri.Builder();
-            uri.scheme("http").authority("pierredavy.com").appendPath("login.php").appendQueryParameter("login", params[0]);
+            uri.scheme("http").authority("pierredavy.com").appendPath("getcontactlocation.php").appendQueryParameter("login", params[0]).appendQueryParameter("token", params[1]);
             String url = uri.build().toString();
             String result = null;
             try {
@@ -137,7 +141,9 @@ public class Map_Activity extends Activity implements LocationListener {
             //on va mettre le contenu dans un JSONObject, pas sûr que ça marche mais on peut essayer
             // et on récupère les valeurs voulues, pour l'instant ça ne marche pas vu que la page php n'existe pas
             try {
-                JSONObject msg = new JSONObject(result);
+                JSONObject userList = new JSONObject(result);
+                JSONArray userArray = userList.getJSONArray("contacts");
+                tabUser = new String[userArray.length()][3];
                 latitude = Double.parseDouble(msg.getString("latitude").toString());
                 longitude = Double.parseDouble(msg.getString("longitude").toString());
             } catch (JSONException e) {
