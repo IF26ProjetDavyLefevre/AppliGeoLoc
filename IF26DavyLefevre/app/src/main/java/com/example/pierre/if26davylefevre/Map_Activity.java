@@ -116,6 +116,7 @@ public class Map_Activity extends Activity implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
+        //ici on update les données de position en local pour faire bouger le marqueur
         latitude = location.getLatitude();
         longitude = location.getLongitude();
         altitude = location.getAltitude();
@@ -123,7 +124,7 @@ public class Map_Activity extends Activity implements LocationListener {
         me = new LatLng(latitude,longitude);
         myPosition.setPosition(me);
 
-        //maj des coordonnées dans la base
+        //maj des coordonnées (latitude, longitude) dans la base
         Uri.Builder uri = new Uri.Builder();
         uri.scheme("http").authority("pierredavy.com").appendPath("updateLatLong.php").appendQueryParameter("login", login)
                 .appendQueryParameter("latitude", ""+latitude).appendQueryParameter("longitude", ""+longitude);
@@ -136,7 +137,7 @@ public class Map_Activity extends Activity implements LocationListener {
         } catch (Exception e) {
             Log.e("httpGet ", e.toString(), e);
         }
-        Log.d("Result   : ",result);
+        //Log.d("Result   : ",result);
         //String msg = "Latitude ="+latitude+", Longitude = "+longitude;
         //Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         //ici il va falloir que l'on se mette d'accord sur les mouvements de caméra, est ce que ça suit les mouvements de l'utilisateur ou non
@@ -177,8 +178,8 @@ public class Map_Activity extends Activity implements LocationListener {
             //Ici on vérifie que les informations envoyées sont celles du bon contact
             Log.d("Result   : ",result);
 
-            //on va mettre le contenu dans un JSONObject, pas sûr que ça marche mais on peut essayer
-            // et on récupère les valeurs voulues, pour l'instant ça ne marche pas vu que la page php n'existe pas
+            //on va mettre le contenu dans un JSONObject
+            // et on récupère les valeurs voulues pour les stocker dans des variables
             try {
                 JSONObject userList = new JSONObject(result);
                 JSONArray userArray = userList.getJSONArray("user");
