@@ -14,10 +14,9 @@
         android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/T_password"
-        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="157dp"
-        android:text="if26" />
+        android:text="if26"
+        android:layout_below="@+id/T_log" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -26,26 +25,26 @@
         android:text="davypier"
         android:ems="10"
         android:id="@+id/T_log"
-        android:layout_alignBottom="@+id/T_password"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="55dp" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentBottom="false" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login"
         android:id="@+id/BLogin"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/T_password" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Créer Compte"
         android:id="@+id/BCreate"
-        android:layout_below="@+id/BLogin"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="46dp" />
+        android:layout_below="@+id/BLogin" />
 
 
 </RelativeLayout>

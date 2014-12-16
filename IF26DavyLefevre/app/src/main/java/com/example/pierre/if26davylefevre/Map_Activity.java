@@ -56,6 +56,7 @@ public class Map_Activity extends Activity implements LocationListener {
             public void onClick(View v) {
                 Intent contacts_Activity = new Intent(getApplicationContext(),Contacts_Activity.class);
                 contacts_Activity.putExtra("Login",login);
+                contacts_Activity.putExtra("Token",token);
                 startActivity(contacts_Activity);
             }
         });
@@ -65,6 +66,7 @@ public class Map_Activity extends Activity implements LocationListener {
             public void onClick(View v) {
                 Intent param_Activity = new Intent(getApplicationContext(),Param_Activity.class);
                 param_Activity.putExtra("Login",login);
+                param_Activity.putExtra("Token",token);
                 startActivity(param_Activity);
             }
         });
@@ -101,10 +103,10 @@ public class Map_Activity extends Activity implements LocationListener {
             Marker marker = map.addMarker(new MarkerOptions().position(contact).title(""+tabUser[i][0]));
             contactMarker.add(marker);
         }
-        String msg = "Latitude ="+latitude+", Longitude = "+longitude;
-        //Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         me = new LatLng(latitude,longitude);
         myPosition = map.addMarker(new MarkerOptions().position(me).title("MySelf"));
+        String msg = "Latitude ="+latitude+", Longitude = "+longitude;
+        //Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         if (map!=null && latitude != 0 && longitude != 0) {
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(me, 10));
             map.animateCamera(CameraUpdateFactory.zoomTo(10), 1500, null);
@@ -120,6 +122,21 @@ public class Map_Activity extends Activity implements LocationListener {
         accuracy = location.getAccuracy();
         me = new LatLng(latitude,longitude);
         myPosition.setPosition(me);
+
+        //maj des coordonnées dans la base
+        Uri.Builder uri = new Uri.Builder();
+        uri.scheme("http").authority("pierredavy.com").appendPath("updateLatLong.php").appendQueryParameter("login", login)
+                .appendQueryParameter("latitude", ""+latitude).appendQueryParameter("longitude", ""+longitude);
+        String url = uri.build().toString();
+        String result = null;
+        try {
+            HttpClient HTTPCLlient = new DefaultHttpClient();
+            HttpResponse HTTPResponse = HTTPCLlient.execute(new HttpGet(url));
+            result = EntityUtils.toString(HTTPResponse.getEntity(), "utf8");
+        } catch (Exception e) {
+            Log.e("httpGet ", e.toString(), e);
+        }
+        Log.d("Result   : ",result);
         //String msg = "Latitude ="+latitude+", Longitude = "+longitude;
         //Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         //ici il va falloir que l'on se mette d'accord sur les mouvements de caméra, est ce que ça suit les mouvements de l'utilisateur ou non
@@ -173,12 +190,6 @@ public class Map_Activity extends Activity implements LocationListener {
                     tabUser[i][2] = userArray.getJSONObject(i+1).getString("longitude").toString();
                     Log.d("Contenu tabUser", "login : "+tabUser[i][0]+", latitude : "+tabUser[i][1]+", longitude : "+tabUser[i][2]);
                 }
-                latitude = Double.parseDouble(userArray.getJSONObject(0).getString("latitude").toString());
-                longitude = Double.parseDouble(userArray.getJSONObject(0).getString("longitude").toString());
-                Log.d("Infos","Login : "+login+", latitude : "+latitude+", longitude : "+longitude);
-
-                Log.d("Nombre de User :", ""+tabUser.length);
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
