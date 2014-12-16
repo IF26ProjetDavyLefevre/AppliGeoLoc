@@ -25,7 +25,8 @@ if ($result !== false) {
 
     $json = array(
         'error' => false,
-        'user' => $result
+        'user' => $result,
+        
     );
 }
 

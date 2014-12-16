@@ -88,7 +88,7 @@ public class Contacts_Activity extends Activity {
         protected String doInBackground(String... params){
             // http://pierredavy.com/login.php?login=davypier&password=if26
             Uri.Builder uri = new Uri.Builder();
-            uri.scheme("http").authority("pierredavy.com").appendPath("contacts.php").appendQueryParameter("login", params[0]);
+            uri.scheme("http").authority("pierredavy.com").appendPath("getrelations.php").appendQueryParameter("login", params[0]).appendQueryParameter("token", params[1]);
             String url = uri.build().toString();
             String content = null;
             try {
