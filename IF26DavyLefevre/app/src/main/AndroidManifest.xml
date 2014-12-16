@@ -33,22 +33,23 @@
         </activity>
         <activity
             android:name=".CreateContact_Activity"
-            android:label="@string/title_activity_create_contact_" />
-        <activity
-            android:name=".MainPage"
-            android:label="@string/title_activity_main_page" />
+            android:label="Création de compte" />
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="@string/mapKey" />
 
         <activity
-            android:name=".Tab3Fragment"
-            android:label="@string/title_activity_tab3_fragment" >
+            android:name=".Map_Activity"
+            android:label="Map" >
         </activity>
         <activity
-            android:name=".Map_Activity"
-            android:label="@string/title_activity_map_" >
+            android:name=".Contacts_Activity"
+            android:label="Liste des contacts" >
+        </activity>
+        <activity
+            android:name=".Param_Activity"
+            android:label="Paramètres" >
         </activity>
     </application>
 
