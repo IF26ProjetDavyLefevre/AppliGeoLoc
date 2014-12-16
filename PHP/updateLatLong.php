@@ -24,7 +24,6 @@ $longitude = $parameters['longitude'];
 
 print_r($parameters);
 
-//$db->AddNewUser('$login', '$mdp', '$token', '$update', '$latitude','$longitude','$altitude','$precision');
 $db->updatelatlng($login, $latitude, $longitude);
 
 
