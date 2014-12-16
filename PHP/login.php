@@ -13,9 +13,11 @@ $json = array(
 $db = new BDD();
 $db->DB();
 
+$pass = md5($parameters[':password']);
+
 // http://pierredavy.com/login.php?login=davypier&password=if26
 
-$sql = "SELECT login,token FROM User WHERE login = '" . $parameters[':login'] . "' AND password = '" . $parameters[':password'] . "'";
+$sql = "SELECT login,token FROM User WHERE login = '" . $parameters[':login'] . "' AND password = '" .$pass. "'";
 //print_r($sql);
 $req = $db->pdo->query($sql);
 $result = $req->fetch(PDO::FETCH_ASSOC);

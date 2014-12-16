@@ -29,7 +29,7 @@ foreach ($_GET as $key => $value) {
 
 
 $login = $parameters['login'];
-$mdp = $parameters['password'];
+$mdp = md5($parameters['password']);
 $token = $parameters['token'];
 $update = $parameters['update'];
 $latitude = $parameters['latitude'];
