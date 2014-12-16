@@ -47,16 +47,6 @@ public class Login extends Activity {
                 startActivity(pageCreateUser);
             }
         });
-
-        Button BGotoMap = (Button) findViewById(R.id.B_GotoMap);
-        BGotoMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent pageCreateUser = new Intent(getApplicationContext(),Map_Activity.class);
-                startActivity(pageCreateUser);
-            }
-        });
-
     }
 
     public class threadActivity extends AsyncTask<String, Void, String> {
@@ -92,10 +82,10 @@ public class Login extends Activity {
             //Si les identifiants sont corrects, on lance l'activité 2
             if (JSONResult[1].equals("false")) {
 
-                Intent mainpage = new Intent(getApplicationContext(),MainPage.class);
+                Intent mapActivity = new Intent(getApplicationContext(),Map_Activity.class);
                // token= JSONToken[1].substring(1, JSONToken[1].length() - 2);
-                //page2.putExtra("Token",token);
-                startActivity(mainpage);
+                mapActivity.putExtra("Login",params[0]);
+                startActivity(mapActivity);
             }
             // on affiche que les idéntifiants sont faux sinon
             else {
