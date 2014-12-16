@@ -1,13 +1,19 @@
 package com.example.pierre.if26davylefevre;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -15,6 +21,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,13 +32,35 @@ public class Contacts_Activity extends Activity {
     String[][] tabContact;
     HashMap<String, String> element;
     List<HashMap<String, String>> liste;
+    private ListAdapter adapter;
+    private ListView listView;
+    Context myContext ;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
+        myContext= getApplicationContext();
 
         Intent intent =getIntent();
         login = intent.getStringExtra("Login");
+        listView = (ListView) findViewById(R.id.lVContact);
+        liste = new ArrayList<HashMap<String, String>>();
+        ThreadContactActivity contactTask = new ThreadContactActivity();
+        contactTask.execute(login);
+
+        adapter = new SimpleAdapter(myContext, liste, android.R.layout.simple_list_item_2,
+                new String[] {"text1", "text2"}, new int[] {android.R.id.text1, android.R.id.text2 });
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long arg3)
+            {
+                String loginContact = tabContact[position][2];
+                Intent map_Activity = new Intent(getApplicationContext(),Map_Activity.class);
+                map_Activity.putExtra("Login",login);
+                map_Activity.putExtra("LoginContact",loginContact);
+                startActivity(map_Activity);
+            }
+        });
 
         Button btnParam = (Button) findViewById(R.id.btnParam);
         btnParam.setOnClickListener(new View.OnClickListener() {
