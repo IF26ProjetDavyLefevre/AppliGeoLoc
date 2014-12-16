@@ -3,6 +3,7 @@
 $BDD = new BDD();
 $BDD->DB();
 //$BDD->AddNewUser('login', 'mdp', '1222', '2014-12-02', 12, 23, 34, 45);
+//$BDD->updatelatlng('davypier', "12", "12");
 
 class BDD {
 
@@ -54,8 +55,18 @@ class BDD {
         
     }
 
-    public function update($model, $table, $where, $whereArgs = array()) {
+    public function updatelatlng($login, $latitude,$longitude) {
+         $req = $this->pdo->prepare('UPDATE User SET latitude= :latitude , longitude = :longitude, last_update = DATE(NOW()) WHERE login = :login');
+         print_r($req);
+        $result = $req->execute(array(
+            ':login' => $login,
+            ':latitude' => $latitude,
+            ':longitude' => $longitude
+        ));
         
+        if (!$result) {
+            return false;
+        }
     }
 
     public function delete($table, $where, $whereArgs = array()) {
