@@ -57,7 +57,6 @@ class BDD {
 
     public function updatelatlng($login, $latitude,$longitude) {
          $req = $this->pdo->prepare('UPDATE User SET latitude= :latitude , longitude = :longitude, last_update = DATE(NOW()) WHERE login = :login');
-         print_r($req);
         $result = $req->execute(array(
             ':login' => $login,
             ':latitude' => $latitude,
