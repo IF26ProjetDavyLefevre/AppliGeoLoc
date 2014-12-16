@@ -33,6 +33,7 @@
         android:id="@+id/lVContact"
         android:layout_below="@+id/btnMap"
         android:layout_alignParentLeft="true"
+        android:background="@color/wallet_hint_foreground_holo_dark"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
