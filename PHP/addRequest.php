@@ -5,15 +5,12 @@ require 'BDD.php';
 $parameters = array
     (
     'login' => null,
-    'password' => null,
-    'token' => null,
-    'update' => null,
-    'latitude' => null,
-    'longitude' => null,
-    'altitude' => null,
-    'precise' => null
+    'login2' => null,
+    'status' => null
         
 );
+
+//3 possiblités de status pour la requete : attente, acceptee,refusee
 
 $db = new BDD();
 $db->DB();
@@ -28,17 +25,12 @@ foreach ($_GET as $key => $value) {
 
 
 
-$login = $parameters['login'];
-$mdp = md5($parameters['password']);
-$token = md5(time() . $login. $password);
-$update = $parameters['update'];
-$latitude = $parameters['latitude'];
-$longitude = $parameters['longitude'];
-$altitude = $parameters['altitude'];
-$precise = $parameters['precise'];
+$login = $parameters['login2'];
+$login2 = $parameters['login2'];
+$status = $parameters['status'];
 print_r($parameters);
 
 //$db->AddNewUser('$login', '$mdp', '$token', '$update', '$latitude','$longitude','$altitude','$precision');
-$db->AddNewUser($login, $mdp, $token, $update, $latitude, $longitude, $altitude, $precise);
+$db->addRequest($login, $login2,$status);
 
 ?>

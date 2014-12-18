@@ -22,7 +22,7 @@ class BDD {
         }
     }
 
-//pour l'instant permet de renvoyer les différents utilisateurs de la BDD
+    //pour l'instant permet de renvoyer les différents utilisateurs de la BDD
     public function find() {
         $resultats = $this->pdo->query("SELECT login FROM User WHERE 1");
         $resultats->setFetchMode(PDO::FETCH_OBJ);
@@ -32,6 +32,7 @@ class BDD {
         $resultats->closeCursor();
     }
 
+    //ajoute un nouvel utilisateur dans la base de données
     public function AddNewUser($login, $mdp, $token, $update, $latitude, $longitude, $altitude, $precise) {
         $req = $this->pdo->prepare('INSERT INTO User(login,password, token, last_update,latitude,longitude,altitude,precise,visible) VALUES(:login, :password, :token, :last_update, :latitude, :longitude, :altitude, :precise, :visible)');
         $result = $req->execute(array(
@@ -51,10 +52,7 @@ class BDD {
         
     }
 
-    public function search($class, $table, $where, $whereArgs = array()) {
-        
-    }
-
+    //permet de changer les coordonnées d'un utilisateur dans la base de données
     public function updatelatlng($login, $latitude,$longitude) {
          $req = $this->pdo->prepare('UPDATE User SET latitude= :latitude , longitude = :longitude, last_update = DATE(NOW()) WHERE login = :login');
         $result = $req->execute(array(
@@ -68,8 +66,59 @@ class BDD {
         }
     }
 
-    public function delete($table, $where, $whereArgs = array()) {
+    //Permet de changer la variable visible a true or false
+    // a tester
+    public function setVisible($login,$visible) {
+         $req = $this->pdo->prepare('UPDATE User SET  visible = :visible WHERE login = :login');
+        $result = $req->execute(array(
+            ':login' => $login,
+            ':visible' => $visible
+        ));
         
+        if (!$result) {
+            return false;
+        }
+    }
+    
+    //Ajoute une nouvelle relation entre 2 users
+    // a tester
+    public function addNewRelation($login1,$login2) {
+        $req = $this->pdo->prepare('INSERT INTO Relation(login_user1,login_user2) VALUES(:login_user1, :login_user2 )');
+        $result = $req->execute(array(
+            ':login_user1' => $login1,
+            ':login_user2' => $login2
+        ));
+        if (!$result) {
+            return false;
+        }
+    }
+    
+    public function addRequest($login,$login2,$date,$status) {
+        $req = $this->pdo->prepare('INSERT INTO Requete(login,login2, date, status) VALUES(:login, :login2, :date, :status )');
+        $result = $req->execute(array(
+            ':login' => $login,
+            ':login2' => $login2,
+            ':date' => DATE(NOW()),
+            ':status' =>$status
+        ));
+        if (!$result) {
+            return false;
+        }
+    }
+    
+    //Permet de changer la le status de la requete
+    // a compléter
+    public function setVisible($login,$login2,$status) {
+         $req = $this->pdo->prepare('UPDATE Requete SET  status = :status WHERE login = :login AND login2 = :login2');
+        $result = $req->execute(array(
+            ':login' => $login,
+            ':login2' => $login2,
+            ':status' => $status
+        ));
+        
+        if (!$result) {
+            return false;
+        }
     }
 
 }
