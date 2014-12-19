@@ -4,8 +4,8 @@ require 'BDD.php';
 
 $parameters = array
     (
-    'login_user1' => null,
-    'login_user2' => null
+    'login1' => null,
+    'login2' => null
 );
 
 $db = new BDD();
@@ -16,8 +16,8 @@ foreach ($_GET as $key => $value) {
 }
 
 
-$login1 = $parameters['login_user1'];
-$login2 = $parameters['login_user2'];
+$login1 = $parameters['login1'];
+$login2 = $parameters['login2'];
 
 print_r($parameters);
 

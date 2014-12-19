@@ -67,7 +67,6 @@ class BDD {
     }
 
     //Permet de changer la variable visible a true or false
-    // a tester
     public function setVisible($login,$visible) {
          $req = $this->pdo->prepare('UPDATE User Set visible = :visible WHERE login = :login');
         $result = $req->execute(array(
@@ -94,13 +93,12 @@ class BDD {
     }
     
     //ajoute une requete entre 2 users
-    public function addRequest($login,$login2,$status) {
+    public function addRequest($login,$login2) {
         $req = $this->pdo->prepare('INSERT INTO Request(login_user_request,login_user_request_receiver, date, status) VALUES(:login_user_request, :login_user_request_receiver, DATE(NOW()), :status )');
         $result = $req->execute(array(
             ':login_user_request' => $login,
             ':login_user_request_receiver' => $login2,
-
-            ':status' =>$status
+            ':status' =>'Pending'
         ));
         if (!$result) {
             return false;

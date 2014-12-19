@@ -4,9 +4,8 @@ require 'BDD.php';
 
 $parameters = array
     (
-    'login_user_request' => null,
-    'login_user_request_receiver' => null,
-    'status' => null
+    'login1' => null,
+    'login2' => null
         
 );
 
@@ -25,12 +24,11 @@ foreach ($_GET as $key => $value) {
 
 
 
-$login = $parameters['login_user_request'];
-$login2 = $parameters['login_user_request_receiver'];
-$status = $parameters['status'];
+$login = $parameters['login1'];
+$login2 = $parameters['login2'];
 print_r($parameters);
 
 //$db->AddNewUser('$login', '$mdp', '$token', '$update', '$latitude','$longitude','$altitude','$precision');
-$db->addRequest($login, $login2,$status);
+$db->addRequest($login, $login2);
 
 ?>
