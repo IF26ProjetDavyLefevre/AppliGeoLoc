@@ -69,11 +69,12 @@ class BDD {
     //Permet de changer la variable visible a true or false
     // a tester
     public function setVisible($login,$visible) {
-         $req = $this->pdo->prepare('UPDATE User SET  visible = :visible WHERE login = :login');
+         $req = $this->pdo->prepare('UPDATE User Set visible = :visible WHERE login = :login');
         $result = $req->execute(array(
-            ':login' => $login,
-            ':visible' => $visible
+            ':visible' => $visible,
+            ':login' => $login
         ));
+        print_r($req);
         
         if (!$result) {
             return false;
@@ -81,7 +82,6 @@ class BDD {
     }
     
     //Ajoute une nouvelle relation entre 2 users
-    // a tester
     public function addNewRelation($login1,$login2) {
         $req = $this->pdo->prepare('INSERT INTO Relation(login_user1,login_user2) VALUES(:login_user1, :login_user2 )');
         $result = $req->execute(array(
@@ -93,12 +93,13 @@ class BDD {
         }
     }
     
-    public function addRequest($login,$login2,$date,$status) {
-        $req = $this->pdo->prepare('INSERT INTO Requete(login,login2, date, status) VALUES(:login, :login2, :date, :status )');
+    //ajoute une requete entre 2 users
+    public function addRequest($login,$login2,$status) {
+        $req = $this->pdo->prepare('INSERT INTO Request(login_user_request,login_user_request_receiver, date, status) VALUES(:login_user_request, :login_user_request_receiver, DATE(NOW()), :status )');
         $result = $req->execute(array(
-            ':login' => $login,
-            ':login2' => $login2,
-            ':date' => DATE(NOW()),
+            ':login_user_request' => $login,
+            ':login_user_request_receiver' => $login2,
+
             ':status' =>$status
         ));
         if (!$result) {
@@ -108,8 +109,8 @@ class BDD {
     
     //Permet de changer la le status de la requete
     // a compléter
-    public function setVisible($login,$login2,$status) {
-         $req = $this->pdo->prepare('UPDATE Requete SET  status = :status WHERE login = :login AND login2 = :login2');
+    public function setRequestStatus($login,$login2,$status) {
+         $req = $this->pdo->prepare('UPDATE Request SET  status = :status WHERE login = :login AND login2 = :login2');
         $result = $req->execute(array(
             ':login' => $login,
             ':login2' => $login2,

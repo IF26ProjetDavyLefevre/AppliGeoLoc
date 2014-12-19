@@ -17,10 +17,13 @@ foreach ($_GET as $key => $value) {
 }
 
 
-$visible = $parameters['$visible'];
+$visible = $parameters['visible'];
 $login = $parameters['login'];
 
-
 print_r($parameters);
+
+http://pierredavy.com/setVisible.php?login=Thor&visible=1
+    // marche seulement avec 0, 1 et false, pas true...
+
 
 $db->setVisible($login, $visible);

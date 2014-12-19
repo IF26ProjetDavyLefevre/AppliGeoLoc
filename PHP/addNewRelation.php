@@ -23,4 +23,5 @@ print_r($parameters);
 
 $db->addNewRelation($login1,$login2);
 
+http://pierredavy.com/addNewRelation.php?login_user1=Thor&login_user2=IronMan
 ?>

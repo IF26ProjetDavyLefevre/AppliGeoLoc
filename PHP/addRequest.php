@@ -4,13 +4,13 @@ require 'BDD.php';
 
 $parameters = array
     (
-    'login' => null,
-    'login2' => null,
+    'login_user_request' => null,
+    'login_user_request_receiver' => null,
     'status' => null
         
 );
 
-//3 possiblités de status pour la requete : attente, acceptee,refusee
+//3 possiblités de status pour la requete : pending, accepted, refused
 
 $db = new BDD();
 $db->DB();
@@ -25,8 +25,8 @@ foreach ($_GET as $key => $value) {
 
 
 
-$login = $parameters['login2'];
-$login2 = $parameters['login2'];
+$login = $parameters['login_user_request'];
+$login2 = $parameters['login_user_request_receiver'];
 $status = $parameters['status'];
 print_r($parameters);
 
