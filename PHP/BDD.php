@@ -106,7 +106,6 @@ class BDD {
     }
 
     //Permet de changer la le status de la requete
-    // a compléter
     public function setRequestStatus($login, $login2, $status) {
         $req = $this->pdo->prepare('UPDATE Request SET  status = :status WHERE login_user_request = :login AND login_user_request_receiver = :login2');
         $result = $req->execute(array(
@@ -114,6 +113,12 @@ class BDD {
             ':login2' => $login2,
             ':status' => $status
         ));
+        
+        // Si la requete est acceptée, ajouter une nouvelle relation
+        if ($status =='Accepted'){
+            $this->addNewRelation($login, $login2);
+            
+        }
         
         if (!$result) {
             return false;
