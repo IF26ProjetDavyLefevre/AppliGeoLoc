@@ -24,4 +24,5 @@ $status = $parameters['status'];
 
 print_r($parameters);
 
+http://pierredavy.com/setRequestStatus?login1=Thor&login2=TheHulk&status=Accepted
 $db->setRequestStatus($login1, $login2, $status);
