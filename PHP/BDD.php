@@ -117,11 +117,7 @@ class BDD {
         // Si la requete est acceptée, ajouter une nouvelle relation
         if ($status =='Accepted'){
             $this->addNewRelation($login, $login2);
-        }
-        else{
-            $this
-        }
-        
+        }        
         if (!$result) {
             return false;
         }
