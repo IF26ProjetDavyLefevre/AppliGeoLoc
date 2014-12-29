@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -24,7 +25,7 @@ import org.json.JSONObject;
 
 public class Login extends Activity {
 
-   // Context myContext= getApplicationContext();
+    // Context myContext= getApplicationContext();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class Login extends Activity {
         Bcreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent pageCreateUser = new Intent(getApplicationContext(),CreateContact_Activity.class);
+                Intent pageCreateUser = new Intent(getApplicationContext(), CreateContact_Activity.class);
                 startActivity(pageCreateUser);
             }
         });
@@ -70,16 +71,15 @@ public class Login extends Activity {
             }
 
             //debug dans la console
-            Log.d("Result   : ",result);
+            Log.d("Result   : ", result);
 
-            String JSONResult[] , JSONToken[];
+            String JSONResult[], JSONToken[];
             String resultArray[] = result.split(",");
             JSONResult = resultArray[0].split(":");
 
 
-
-            for (int j =0;j<JSONResult.length;j++){
-                Log.d("Jsonresult :",JSONResult[j]);
+            for (int j = 0; j < JSONResult.length; j++) {
+                Log.d("Jsonresult :", JSONResult[j]);
             }
 
             //Si les identifiants sont corrects, on lance l'activité 2
@@ -87,15 +87,14 @@ public class Login extends Activity {
                 JSONObject user;
                 try {
                     user = new JSONObject(result);
-                    Intent mapActivity = new Intent(getApplicationContext(),Map_Activity.class);
+                    Intent mapActivity = new Intent(getApplicationContext(), Map_Activity.class);
                     // token= JSONToken[1].substring(1, JSONToken[1].length() - 2);
-                    mapActivity.putExtra("Login",params[0]);
+                    mapActivity.putExtra("Login", params[0]);
                     mapActivity.putExtra("Token", user.getJSONObject("user").getString("token").toString());
                     startActivity(mapActivity);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
 
 
             }

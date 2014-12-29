@@ -49,7 +49,7 @@ public class CreateContact_Activity extends Activity implements LocationListener
 
         Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH)+1;  // le mois de janvier est 0
+        int month = c.get(Calendar.MONTH) + 1;  // le mois de janvier est 0
         int day = c.get(Calendar.DAY_OF_MONTH);
         final String date = year + "-" + month + "-" + day;
         Log.d("date:", date);
@@ -62,7 +62,7 @@ public class CreateContact_Activity extends Activity implements LocationListener
                 EditText login = (EditText) findViewById(R.id.T_Login);
                 EditText password = (EditText) findViewById(R.id.T_Pwd);
                 threadCreate async = new threadCreate();
-                async.execute(login.getText().toString(), password.getText().toString(), "1", date, String.valueOf(latitude) , String.valueOf(longitude), String.valueOf(altitude), String.valueOf(accuracy));
+                async.execute(login.getText().toString(), password.getText().toString(), "1", date, String.valueOf(latitude), String.valueOf(longitude), String.valueOf(altitude), String.valueOf(accuracy));
 
             }
         });
@@ -75,17 +75,17 @@ public class CreateContact_Activity extends Activity implements LocationListener
         altitude = location.getAltitude();
         accuracy = location.getAccuracy();
 
-        String msg = "New location : Latitude = "+latitude+", Longitude = "+longitude+", Altitude = "+altitude+", Accuracy = "+accuracy;
+        String msg = "New location : Latitude = " + latitude + ", Longitude = " + longitude + ", Altitude = " + altitude + ", Accuracy = " + accuracy;
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 
     public void onProviderDisabled(String provider) {
-        String msg = "Provider disabled : "+provider;
+        String msg = "Provider disabled : " + provider;
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     public void onProviderEnabled(String provider) {
-        String msg = "Provider enabled : "+provider;
+        String msg = "Provider enabled : " + provider;
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
@@ -103,7 +103,7 @@ public class CreateContact_Activity extends Activity implements LocationListener
                 break;
         }
 
-        String msg = "Provider disabled : "+provider+", New Status"+newStatus;
+        String msg = "Provider disabled : " + provider + ", New Status" + newStatus;
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
@@ -135,7 +135,7 @@ public class CreateContact_Activity extends Activity implements LocationListener
                 }
             });
 
-            Intent backtoStart = new Intent(getApplicationContext(),Login.class);
+            Intent backtoStart = new Intent(getApplicationContext(), Login.class);
             startActivity(backtoStart);
 
             return result;

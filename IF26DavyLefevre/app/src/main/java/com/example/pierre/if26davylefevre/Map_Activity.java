@@ -11,12 +11,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -54,9 +56,9 @@ public class Map_Activity extends Activity implements LocationListener {
         Button btnContacts = (Button) findViewById(R.id.btnContacts);
         btnContacts.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent contacts_Activity = new Intent(getApplicationContext(),Contacts_Activity.class);
-                contacts_Activity.putExtra("Login",login);
-                contacts_Activity.putExtra("Token",token);
+                Intent contacts_Activity = new Intent(getApplicationContext(), Contacts_Activity.class);
+                contacts_Activity.putExtra("Login", login);
+                contacts_Activity.putExtra("Token", token);
                 startActivity(contacts_Activity);
             }
         });
@@ -64,9 +66,9 @@ public class Map_Activity extends Activity implements LocationListener {
         Button btnParam = (Button) findViewById(R.id.btnParam);
         btnParam.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent param_Activity = new Intent(getApplicationContext(),Param_Activity.class);
-                param_Activity.putExtra("Login",login);
-                param_Activity.putExtra("Token",token);
+                Intent param_Activity = new Intent(getApplicationContext(), Param_Activity.class);
+                param_Activity.putExtra("Login", login);
+                param_Activity.putExtra("Token", token);
                 startActivity(param_Activity);
             }
         });
@@ -84,7 +86,7 @@ public class Map_Activity extends Activity implements LocationListener {
         ThreadCreateMapActivity DOC = new ThreadCreateMapActivity();
         DOC.execute(login, token);
         try {
-            synchronized (this){
+            synchronized (this) {
                 wait(3000);
             }
         } catch (InterruptedException e) {
@@ -94,20 +96,20 @@ public class Map_Activity extends Activity implements LocationListener {
         Double latitudeContact;
         Double longitudeContact;
         LatLng contact;
-        for(int i = 0; i < tabUser.length -1; i++ ) {
-            Log.d("i", i+"");
+        for (int i = 0; i < tabUser.length - 1; i++) {
+            Log.d("i", i + "");
             Log.d("Latitude :", tabUser[i][1]);
             latitudeContact = Double.parseDouble(tabUser[i][1]);
             longitudeContact = Double.parseDouble(tabUser[i][2]);
             contact = new LatLng(latitudeContact, longitudeContact);
-            Marker marker = map.addMarker(new MarkerOptions().position(contact).title(""+tabUser[i][0]));
+            Marker marker = map.addMarker(new MarkerOptions().position(contact).title("" + tabUser[i][0]));
             contactMarker.add(marker);
         }
-        me = new LatLng(latitude,longitude);
+        me = new LatLng(latitude, longitude);
         myPosition = map.addMarker(new MarkerOptions().position(me).title("MySelf"));
-        String msg = "Latitude ="+latitude+", Longitude = "+longitude;
+        String msg = "Latitude =" + latitude + ", Longitude = " + longitude;
         //Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-        if (map!=null && latitude != 0 && longitude != 0) {
+        if (map != null && latitude != 0 && longitude != 0) {
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(me, 10));
             map.animateCamera(CameraUpdateFactory.zoomTo(10), 1500, null);
         }
@@ -121,12 +123,12 @@ public class Map_Activity extends Activity implements LocationListener {
         longitude = location.getLongitude();
         altitude = location.getAltitude();
         accuracy = location.getAccuracy();
-        me = new LatLng(latitude,longitude);
+        me = new LatLng(latitude, longitude);
         myPosition.setPosition(me);
 
         //maj des coordonnées (latitude, longitude) dans la base
         ThreadUpdatePositionMapActivity TUPMA = new ThreadUpdatePositionMapActivity();
-        TUPMA.execute(login, ""+latitude, ""+longitude);
+        TUPMA.execute(login, "" + latitude, "" + longitude);
 
         //Log.d("Result   : ",result);
         //String msg = "Latitude ="+latitude+", Longitude = "+longitude;
@@ -167,7 +169,7 @@ public class Map_Activity extends Activity implements LocationListener {
                 Log.e("httpGet ", e.toString(), e);
             }
             //Ici on vérifie que les informations envoyées sont celles du bon contact
-            Log.d("Result   : ",result);
+            Log.d("Result   : ", result);
 
             //on va mettre le contenu dans un JSONObject
             // et on récupère les valeurs voulues pour les stocker dans des variables
@@ -175,12 +177,12 @@ public class Map_Activity extends Activity implements LocationListener {
                 JSONObject userList = new JSONObject(result);
                 JSONArray userArray = userList.getJSONArray("user");
                 tabUser = new String[userArray.length()][3];
-                Log.d("Nombre de contact", " "+userArray.length());
-                for (int i = 0; i < userArray.length()-1; i ++){
-                    tabUser[i][0] = userArray.getJSONObject(i+1).getString("login").toString();
-                    tabUser[i][1] = userArray.getJSONObject(i+1).getString("latitude").toString();
-                    tabUser[i][2] = userArray.getJSONObject(i+1).getString("longitude").toString();
-                    Log.d("Contenu tabUser", "login : "+tabUser[i][0]+", latitude : "+tabUser[i][1]+", longitude : "+tabUser[i][2]);
+                Log.d("Nombre de contact", " " + userArray.length());
+                for (int i = 0; i < userArray.length() - 1; i++) {
+                    tabUser[i][0] = userArray.getJSONObject(i + 1).getString("login").toString();
+                    tabUser[i][1] = userArray.getJSONObject(i + 1).getString("latitude").toString();
+                    tabUser[i][2] = userArray.getJSONObject(i + 1).getString("longitude").toString();
+                    Log.d("Contenu tabUser", "login : " + tabUser[i][0] + ", latitude : " + tabUser[i][1] + ", longitude : " + tabUser[i][2]);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

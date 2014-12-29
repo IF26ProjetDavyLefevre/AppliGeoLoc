@@ -73,8 +73,8 @@ public class Param_Activity extends Activity {
                 if (cb_visible.isChecked()) {
                     Log.d("result :", "checked");
 
-                   threadActivity thread = new threadActivity();
-                   thread.execute(String.valueOf(login), "1");
+                    threadActivity thread = new threadActivity();
+                    thread.execute(String.valueOf(login), "1");
 
                 } else {
                     Log.d("result :", "UNchecked");
@@ -86,8 +86,6 @@ public class Param_Activity extends Activity {
         });
 
     }
-
-
 
 
     public class threadActivity extends AsyncTask<String, Void, String> {
@@ -112,7 +110,6 @@ public class Param_Activity extends Activity {
     }
 
 
-
     //Thread qui permet d'obtenir l'état de visible
     public class threadActivityGetVisible extends AsyncTask<String, Void, String> {
         protected String doInBackground(String... params) {
@@ -131,20 +128,19 @@ public class Param_Activity extends Activity {
 
 
             //debug dans la console
-            Log.d("Result   : ",result);
+            Log.d("Result   : ", result);
 
-            String JSONResult[] ;
+            String JSONResult[];
             String resultArray[] = result.split(",");
             JSONResult = resultArray[1].split(":");
-            String Final[]= JSONResult[2].split("\"");
+            String Final[] = JSONResult[2].split("\"");
 
-                Log.d("setvisibleStatus :",Final[1]);
+            Log.d("setvisibleStatus :", Final[1]);
 
 
             if (Final[1].equals("1")) {
                 cb_visible.setChecked(!cb_visible.isChecked());
-            }
-            else{
+            } else {
                 cb_visible.setChecked(false);
             }
 
