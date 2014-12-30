@@ -92,7 +92,6 @@ class BDD {
         }
     }
 
-
     //ajoute une requete entre 2 users
     public function addRequest($login, $login2) {
         $req = $this->pdo->prepare('INSERT INTO Request(login_user_request,login_user_request_receiver, date, status) VALUES(:login_user_request, :login_user_request_receiver, DATE(NOW()), :status )');
@@ -114,11 +113,11 @@ class BDD {
             ':login2' => $login2,
             ':status' => $status
         ));
-        
+
         // Si la requete est acceptée, ajouter une nouvelle relation
-        if ($status =='Accepted'){
+        if ($status == 'Accepted') {
             $this->addNewRelation($login, $login2);
-        }        
+        }
         if (!$result) {
             return false;
         }

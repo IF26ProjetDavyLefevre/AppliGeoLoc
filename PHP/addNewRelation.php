@@ -23,7 +23,7 @@ $login2 = $parameters['login2'];
 
 
 
-$sql="SELECT * FROM `Relation` WHERE `login_user1`='". $login1 ."' AND `login_user2`='". $login2 ."' OR `login_user1`='". $login2 ."' AND `login_user2`='". $login1 ."'";
+$sql = "SELECT * FROM `Relation` WHERE `login_user1`='" . $login1 . "' AND `login_user2`='" . $login2 . "' OR `login_user1`='" . $login2 . "' AND `login_user2`='" . $login1 . "'";
 
 $req = $db->pdo->query($sql);
 $result = $req->fetchall(PDO::FETCH_ASSOC);
@@ -34,14 +34,12 @@ print_r($result);
 $errors = array_filter($result);
 if (!empty($errors)) {
     echo'relation existe deja';
-}
-
-else{
+} else {
     //si une relation n'existe pas
     echo 'relation crée';
-$db->addNewRelation($login1,$login2);
+    $db->addNewRelation($login1, $login2);
 }
 
 
-  //  http://pierredavy.com/addNewRelation.php?login1=davypier&login2=IronMan
+//  http://pierredavy.com/addNewRelation.php?login1=davypier&login2=IronMan
 ?>
