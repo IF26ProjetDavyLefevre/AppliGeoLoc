@@ -31,7 +31,10 @@ $sql = "SELECT * FROM User WHERE login ='". $parameters['login2']."'";
 $req = $db->pdo->query($sql);
 $result = $req->fetch(PDO::FETCH_ASSOC);
 
-if ($result !== false) {
+print_r($result);
+
+$errors = array_filter($result);
+if (!empty($errors)) {
 
 $db->addRequest($login, $login2);
 }
@@ -40,5 +43,5 @@ $db->addRequest($login, $login2);
      echo 'false';
 }
 
-
+// http://pierredavy.com/addNewRelation.php?login1=davypier&login2=aze
 ?>

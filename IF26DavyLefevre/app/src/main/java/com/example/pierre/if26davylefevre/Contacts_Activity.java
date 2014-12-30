@@ -109,7 +109,7 @@ public class Contacts_Activity extends Activity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long arg3) {
                 final String loginContact = tabContact2[position];
                 AlertDialog.Builder boite;
-               // final EditText input = new EditText(Contacts_Activity.this);
+                // final EditText input = new EditText(Contacts_Activity.this);
                 boite = new AlertDialog.Builder(Contacts_Activity.this);
                 //boite.setView(input);
                 boite.setTitle("boite de dialogue ");
@@ -148,7 +148,7 @@ public class Contacts_Activity extends Activity {
                                 } catch (InterruptedException ex) {
                                 }
 
-                                        Toast.makeText(getApplicationContext(), "Contact ajouté", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Contact ajouté", Toast.LENGTH_LONG).show();
 
                             }
                         }
@@ -285,7 +285,7 @@ public class Contacts_Activity extends Activity {
             }
 
             result= result.toString();
-            Log.d("Result","."+result+".");
+            Log.d("Resultat","."+result+".");
 
             if (result.equals("false")) {
                 runOnUiThread(new Runnable() {

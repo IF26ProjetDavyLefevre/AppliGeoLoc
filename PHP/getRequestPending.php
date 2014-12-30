@@ -20,7 +20,7 @@ $sql="SELECT login_user_request FROM Request WHERE login_user_request_receiver =
 $req = $db->pdo->query($sql);
 $result = $req->fetchall(PDO::FETCH_ASSOC);
 
-print_r($result);
+//print_r($result);
 
 if ($result !== false) {
 
@@ -32,3 +32,5 @@ if ($result !== false) {
 
 
 echo json_encode($json);
+
+// http://pierredavy.com/getRequestPending?login=davypier&status=Pending
