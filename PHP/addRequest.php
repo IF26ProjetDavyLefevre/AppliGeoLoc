@@ -1,3 +1,5 @@
+
+
 <?php
 
 require 'BDD.php';
@@ -19,16 +21,24 @@ foreach ($_GET as $key => $value) {
 }
 
 
-//http://pierredavy.com/addnew.php?login=login&password=mdp&token=1&update=2014/12/02&latitude=12&longitude=34&altitude=56&precision=78
-//http://pierredavy.com/addnew.php?login=123&password=456&token=1&update=2014/12/02&latitude=12&longitude=34&altitude=56&precise=78
-
-
-
 $login = $parameters['login1'];
 $login2 = $parameters['login2'];
-print_r($parameters);
+//print_r($parameters);
 
-//$db->AddNewUser('$login', '$mdp', '$token', '$update', '$latitude','$longitude','$altitude','$precision');
+
+//on vérifie que l'utilisateur existe bien
+$sql = "SELECT * FROM User WHERE login ='". $parameters['login2']."'";
+$req = $db->pdo->query($sql);
+$result = $req->fetch(PDO::FETCH_ASSOC);
+
+if ($result !== false) {
+
 $db->addRequest($login, $login2);
+}
+ else {
+// si le login n'existe pas    
+     echo 'false';
+}
+
 
 ?>

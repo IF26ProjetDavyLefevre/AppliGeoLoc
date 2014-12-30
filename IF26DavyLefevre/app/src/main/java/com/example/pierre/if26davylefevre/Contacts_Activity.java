@@ -26,6 +26,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
+
 public class Contacts_Activity extends Activity {
 
     private String login;
@@ -95,9 +104,51 @@ public class Contacts_Activity extends Activity {
                 startActivity(map_Activity);
             }
         });
+
+        // Ajouter une relation
+        Button BaddRelation = (Button) findViewById(R.id.btn_addRelation);
+        BaddRelation.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                AlertDialog.Builder boite;
+                final EditText input = new EditText(Contacts_Activity.this);
+                boite = new AlertDialog.Builder(Contacts_Activity.this);
+                boite.setView(input);
+                boite.setTitle("boite de dialogue ");
+                boite.setIcon(R.drawable.ic_launcher);
+                boite.setMessage("Saisissez le nom de la personne à ajouter");
+                boite.setPositiveButton("Annuler", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //si on appuie sur annuler
+                            }
+                        }
+                );
+
+                boite.setNegativeButton("Ajouter", new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int which) {
+                                //Récupération de la valeur renseignée dans la boite du dialogue
+                                String value = input.getText().toString();
+                                Log.d("value:", value);
+
+                                ThreadAddContactActivity async = new ThreadAddContactActivity();
+                                async.execute(String.valueOf(login), String.valueOf(value));
+                                try {
+                                    synchronized (this) {
+                                        //on attend 3 secondes que la tâche asynchrone finisse son travail de récupération des noms
+                                        wait(2000);
+                                    }
+                                } catch (InterruptedException ex) {
+                                }
+                            }
+                        }
+                );
+
+                boite.show();
+            }
+        });
     }
 
-    //thread  pour l'envoi de la requete
+    //thread  pour l'envoi de la requete pour afficher les contacts
     public class ThreadContactActivity extends AsyncTask<String, Void, String> {
         protected String doInBackground(String... params) {
             // http://pierredavy.com/login.php?login=davypier&password=if26
@@ -136,6 +187,47 @@ public class Contacts_Activity extends Activity {
 
         }
 
+    }
+
+
+    //thread  pour l'envoi de la requete pour ajouter un contact
+    public class ThreadAddContactActivity extends AsyncTask<String, Void, String> {
+        protected String doInBackground(String... params) {
+            Uri.Builder uri = new Uri.Builder();
+            uri.scheme("http").authority("pierredavy.com").appendPath("addRequest.php").appendQueryParameter("login1", params[0]).appendQueryParameter("login2", params[1]);
+            String url = uri.build().toString();
+            String result = null;
+            try {
+                HttpClient clientHTTP = new DefaultHttpClient();
+                HttpResponse responseHTTP = clientHTTP.execute(new HttpGet(url));
+                result = EntityUtils.toString(responseHTTP.getEntity(), "utf8");
+            } catch (Exception e) {
+                Log.e("httpGet ", e.toString(), e);
+            }
+
+            result= result.toString();
+            Log.d("Result","."+result+".");
+
+            if (result.equals("false")) {
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "Contact inexistant", Toast.LENGTH_LONG).show();
+                    }
+                });
+                Log.d("1ere boucle   : ", result);
+            }
+
+            else {
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "Contact ajouté", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+
+            return result;
+
+        }
     }
 
 }
