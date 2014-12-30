@@ -40,10 +40,11 @@ public class Contacts_Activity extends Activity {
     private String login;
     private String token;
     String[][] tabContact;
-    HashMap<String, String> element;
-    List<HashMap<String, String>> liste;
-    private ListAdapter adapter;
-    private ListView listView;
+    String tabContact2[];
+    HashMap<String, String> element,element2;
+    List<HashMap<String, String>> liste,liste2;
+    private ListAdapter adapter,adapter2;
+    private ListView listView, listView2;
     Context myContext;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +56,8 @@ public class Contacts_Activity extends Activity {
         login = intent.getStringExtra("Login");
         token = intent.getStringExtra("token");
 
-        //a supprimer
-        token = "123";
 
+        //list view des amis
         listView = (ListView) findViewById(R.id.lVContact);
         liste = new ArrayList<HashMap<String, String>>();
         ThreadContactActivity contactTask = new ThreadContactActivity();
@@ -85,6 +85,42 @@ public class Contacts_Activity extends Activity {
             }
         });
 
+
+
+
+        //list view pending
+        listView2 = (ListView) findViewById(R.id.lv_pending);
+        liste2 = new ArrayList<HashMap<String, String>>();
+        ThreadPending pendinglist = new ThreadPending();
+        pendinglist.execute(login, "Pending");
+
+        try {
+            synchronized (this) {
+                //on attend 3 secondes que la tâche asynchrone finisse son travail de récupération des noms
+                wait(3000);
+            }
+        } catch (InterruptedException ex) {
+        }
+
+        adapter2 = new SimpleAdapter(myContext,liste2,android.R.layout.simple_list_item_1,new String[]{"text1"},new int[]{android.R.id.text1});
+
+        listView2.setAdapter(adapter2);
+       /* listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long arg3) {
+                String loginContact = tabContact2[position][2];
+                Intent map_Activity = new Intent(getApplicationContext(), Map_Activity.class);
+                map_Activity.putExtra("Login", login);
+                map_Activity.putExtra("token", token);
+                map_Activity.putExtra("LoginContact", loginContact);
+                startActivity(map_Activity);
+            }
+        });*/
+
+
+
+
+
+
         // Go to activité paramètres
         Button btnParam = (Button) findViewById(R.id.btnParam);
         btnParam.setOnClickListener(new View.OnClickListener() {
@@ -106,7 +142,7 @@ public class Contacts_Activity extends Activity {
         });
 
         // Ajouter une relation
-        Button BaddRelation = (Button) findViewById(R.id.btn_addRelation);
+        Button BaddRelation = (Button) findViewById(R.id.btn_AddRelation);
         BaddRelation.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 AlertDialog.Builder boite;
@@ -151,7 +187,7 @@ public class Contacts_Activity extends Activity {
     //thread  pour l'envoi de la requete pour afficher les contacts
     public class ThreadContactActivity extends AsyncTask<String, Void, String> {
         protected String doInBackground(String... params) {
-            // http://pierredavy.com/login.php?login=davypier&password=if26
+
             Uri.Builder uri = new Uri.Builder();
             uri.scheme("http").authority("pierredavy.com").appendPath("getrelations.php").appendQueryParameter("login", params[0]).appendQueryParameter("token", params[1]);
             String url = uri.build().toString();
@@ -228,6 +264,47 @@ public class Contacts_Activity extends Activity {
             return result;
 
         }
+    }
+
+
+    //thread  pour la recupération des requetes pending
+    public class ThreadPending extends AsyncTask<String, Void, String> {
+        protected String doInBackground(String... params) {
+            Uri.Builder uri = new Uri.Builder();
+            uri.scheme("http").authority("pierredavy.com").appendPath("getRequestPending.php").appendQueryParameter("login", params[0]).appendQueryParameter("status", params[1]);
+            String url = uri.build().toString();
+            String content2 = null;
+            try {
+                HttpClient clientHTTP = new DefaultHttpClient();
+                HttpResponse responseHTTP = clientHTTP.execute(new HttpGet(url));
+                content2 = EntityUtils.toString(responseHTTP.getEntity(), "utf8");
+            } catch (Exception e) {
+                Log.e("httpGet ", e.toString(), e);
+            }
+            try {
+                JSONObject contacts = new JSONObject(content2);
+                JSONArray conv = contacts.getJSONArray("users");
+                tabContact2 = new String[conv.length()];
+                for (int i = 0; i < conv.length(); i++) {
+
+                    tabContact2[i] = conv.getJSONObject(i).getString("login_user_request").toString();
+                    Log.d("tabContact2 :", tabContact2[i]);
+                }
+                for (int i = 0; i < tabContact2.length; i++) {
+                    element2 = new HashMap<String, String>();
+                    element2.put("text1", tabContact2[i]);
+                    liste2.add(element2);
+                }
+
+
+                Log.d("liste2 :", liste2.toString());
+            } catch (Exception e) {
+                Log.e("json ", e.toString(), e);
+            }
+            return content2;
+
+        }
+
     }
 
 }
