@@ -105,16 +105,54 @@ public class Contacts_Activity extends Activity {
         adapter2 = new SimpleAdapter(myContext,liste2,android.R.layout.simple_list_item_1,new String[]{"text1"},new int[]{android.R.id.text1});
 
         listView2.setAdapter(adapter2);
-       /* listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long arg3) {
-                String loginContact = tabContact2[position][2];
-                Intent map_Activity = new Intent(getApplicationContext(), Map_Activity.class);
-                map_Activity.putExtra("Login", login);
-                map_Activity.putExtra("token", token);
-                map_Activity.putExtra("LoginContact", loginContact);
-                startActivity(map_Activity);
+                final String loginContact = tabContact2[position];
+                AlertDialog.Builder boite;
+               // final EditText input = new EditText(Contacts_Activity.this);
+                boite = new AlertDialog.Builder(Contacts_Activity.this);
+                //boite.setView(input);
+                boite.setTitle("boite de dialogue ");
+                boite.setIcon(R.drawable.ic_launcher);
+                boite.setMessage("On vous a ajouté comme relation");
+                boite.setPositiveButton("Refuser", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                ThreadSetRequest threadSet = new ThreadSetRequest();
+                                threadSet.execute(loginContact, login, "Refused");
+
+                                try {
+                                    synchronized (this) {
+                                        //on attend 3 secondes que la tâche asynchrone finisse son travail de récupération des noms
+                                        wait(2000);
+                                    }
+                                } catch (InterruptedException ex) {
+                                }
+                            }
+                        }
+                );
+
+                boite.setNegativeButton("Accepter", new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int which) {
+
+
+                                ThreadSetRequest threadSet = new ThreadSetRequest();
+                                threadSet.execute(loginContact, login, "Accepted");
+
+                                try {
+                                    synchronized (this) {
+                                        //on attend 3 secondes que la tâche asynchrone finisse son travail de récupération des noms
+                                        wait(2000);
+                                    }
+                                } catch (InterruptedException ex) {
+                                }
+                            }
+                        }
+                );
+
+                boite.show();
             }
-        });*/
+        });
 
 
 
@@ -226,7 +264,7 @@ public class Contacts_Activity extends Activity {
     }
 
 
-    //thread  pour l'envoi de la requete pour ajouter un contact
+    //thread  pour l'envoi de la requete pour ajouter une Requete
     public class ThreadAddContactActivity extends AsyncTask<String, Void, String> {
         protected String doInBackground(String... params) {
             Uri.Builder uri = new Uri.Builder();
@@ -305,6 +343,28 @@ public class Contacts_Activity extends Activity {
 
         }
 
+    }
+
+
+
+    //thread  pour confirmer ou rejeter une requete
+    public class ThreadSetRequest extends AsyncTask<String, Void, String> {
+        protected String doInBackground(String... params) {
+            Uri.Builder uri = new Uri.Builder();
+            uri.scheme("http").authority("pierredavy.com").appendPath("setRequestStatus.php").appendQueryParameter("login1", params[0]).appendQueryParameter("login2", params[1]).appendQueryParameter("status", params[2]);
+            String url = uri.build().toString();
+            String result = null;
+            try {
+                HttpClient clientHTTP = new DefaultHttpClient();
+                HttpResponse responseHTTP = clientHTTP.execute(new HttpGet(url));
+                result = EntityUtils.toString(responseHTTP.getEntity(), "utf8");
+            } catch (Exception e) {
+                Log.e("httpGet ", e.toString(), e);
+            }
+
+            return result;
+
+        }
     }
 
 }
