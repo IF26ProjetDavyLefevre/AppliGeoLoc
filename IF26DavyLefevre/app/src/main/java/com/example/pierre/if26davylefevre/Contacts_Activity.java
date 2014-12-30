@@ -127,6 +127,7 @@ public class Contacts_Activity extends Activity {
                                     }
                                 } catch (InterruptedException ex) {
                                 }
+                                Toast.makeText(getApplicationContext(), "Contact refusé", Toast.LENGTH_LONG).show();
                             }
                         }
                 );
@@ -146,6 +147,9 @@ public class Contacts_Activity extends Activity {
                                     }
                                 } catch (InterruptedException ex) {
                                 }
+
+                                        Toast.makeText(getApplicationContext(), "Contact ajouté", Toast.LENGTH_LONG).show();
+
                             }
                         }
                 );
@@ -213,6 +217,7 @@ public class Contacts_Activity extends Activity {
                                     }
                                 } catch (InterruptedException ex) {
                                 }
+
                             }
                         }
                 );
