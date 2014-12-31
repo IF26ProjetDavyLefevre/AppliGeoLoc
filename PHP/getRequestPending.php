@@ -15,7 +15,7 @@ $db = new BDD();
 $db->DB();
 
 
-$sql="SELECT login_user_request FROM Request WHERE login_user_request_receiver = '". $parameters[':login'] ."' AND status='". $parameters[':status'] ."'";
+$sql="SELECT DISTINCT login_user_request FROM Request WHERE login_user_request_receiver = '". $parameters[':login'] ."' AND status='". $parameters[':status'] ."'";
 
 $req = $db->pdo->query($sql);
 $result = $req->fetchall(PDO::FETCH_ASSOC);

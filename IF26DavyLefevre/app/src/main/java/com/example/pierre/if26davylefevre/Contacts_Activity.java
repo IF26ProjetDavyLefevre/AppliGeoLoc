@@ -284,16 +284,20 @@ public class Contacts_Activity extends Activity {
                 Log.e("httpGet ", e.toString(), e);
             }
 
-            result= result.toString();
-            Log.d("Resultat","."+result+".");
+            Log.d("Resul",result);
+            String resultArray[] = result.split("\"");
+           // String resultArray2[] = resultArray[1].split("}");
 
-            if (result.equals("false")) {
+            //Log.d("Resultat",resultArray[3]);
+
+
+
+            if (resultArray[3].equals("false")) {
                 runOnUiThread(new Runnable() {
                     public void run() {
                         Toast.makeText(getApplicationContext(), "Contact inexistant", Toast.LENGTH_LONG).show();
                     }
                 });
-                Log.d("1ere boucle   : ", result);
             }
 
             else {
