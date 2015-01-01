@@ -76,12 +76,10 @@ public class Contacts_Activity extends Activity {
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long arg3) {
-                String loginContact = tabContact[position][2];
-                Intent map_Activity = new Intent(getApplicationContext(), Map_Activity.class);
-                map_Activity.putExtra("Login", login);
-                map_Activity.putExtra("token", token);
-                map_Activity.putExtra("LoginContact", loginContact);
-                startActivity(map_Activity);
+                Uri gmmIntentUri = Uri.parse("google.navigation:q=" + tabContact[position][1] + "," + tabContact[position][2] + "");
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                startActivity(mapIntent);
             }
         });
 

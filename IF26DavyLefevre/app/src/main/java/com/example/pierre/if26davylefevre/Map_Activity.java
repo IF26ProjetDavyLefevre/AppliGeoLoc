@@ -116,11 +116,14 @@ public class Map_Activity extends Activity implements LocationListener {
 
         map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener(){
             public boolean onMarkerClick(Marker marker) {
-                int idMarker = contactMarker.indexOf(marker);
-                Uri gmmIntentUri = Uri.parse("google.navigation:q="+tabUser[idMarker][1]+","+tabUser[idMarker][2]+"");
-                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                mapIntent.setPackage("com.google.android.apps.maps");
-                startActivity(mapIntent);
+                //on rentre ici seulement si ce n'est pas le marqueur de notre position, j'ai du mal d'ailleurs
+                if(marker.getPosition().latitude != me.latitude && marker.getPosition().longitude != me.longitude) {
+                    int idMarker = contactMarker.indexOf(marker);
+                    Uri gmmIntentUri = Uri.parse("google.navigation:q=" + tabUser[idMarker][1] + "," + tabUser[idMarker][2] + "");
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                    mapIntent.setPackage("com.google.android.apps.maps");
+                    startActivity(mapIntent);
+                }
                 return false;
             }
         });
