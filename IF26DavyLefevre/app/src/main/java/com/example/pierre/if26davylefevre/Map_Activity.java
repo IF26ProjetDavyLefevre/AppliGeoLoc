@@ -102,11 +102,14 @@ public class Map_Activity extends Activity implements LocationListener {
             latitudeContact = Double.parseDouble(tabUser[i][1]);
             longitudeContact = Double.parseDouble(tabUser[i][2]);
             contact = new LatLng(latitudeContact, longitudeContact);
-            Marker marker = map.addMarker(new MarkerOptions().position(contact).title("" + tabUser[i][0]));
+            Marker marker = map.addMarker(new MarkerOptions().position(contact).title("" + tabUser[i][0]).snippet("" + tabUser[i][0]));
             contactMarker.add(marker);
         }
         me = new LatLng(latitude, longitude);
-        myPosition = map.addMarker(new MarkerOptions().position(me).title("MySelf"));
+        myPosition = map.addMarker(new MarkerOptions()
+                                .position(me)
+                                .title("Me")
+                                .snippet("Your Position"));
         String msg = "Latitude =" + latitude + ", Longitude = " + longitude;
         //Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         if (map != null && latitude != 0 && longitude != 0) {
