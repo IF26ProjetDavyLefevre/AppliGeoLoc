@@ -11,14 +11,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -27,7 +25,6 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 
@@ -116,6 +113,17 @@ public class Map_Activity extends Activity implements LocationListener {
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(me, 10));
             map.animateCamera(CameraUpdateFactory.zoomTo(10), 1500, null);
         }
+
+        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener(){
+            public boolean onMarkerClick(Marker marker) {
+                int idMarker = contactMarker.indexOf(marker);
+                Uri gmmIntentUri = Uri.parse("google.navigation:q="+tabUser[idMarker][1]+","+tabUser[idMarker][2]+"");
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                startActivity(mapIntent);
+                return false;
+            }
+        });
 
     }
 
