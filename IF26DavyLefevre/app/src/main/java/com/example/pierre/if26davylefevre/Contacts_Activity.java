@@ -41,9 +41,9 @@ public class Contacts_Activity extends Activity {
     private String token;
     String[][] tabContact;
     String tabContact2[];
-    HashMap<String, String> element,element2;
-    List<HashMap<String, String>> liste,liste2;
-    private ListAdapter adapter,adapter2;
+    HashMap<String, String> element, element2;
+    List<HashMap<String, String>> liste, liste2;
+    private ListAdapter adapter, adapter2;
     private ListView listView, listView2;
     Context myContext;
 
@@ -84,8 +84,6 @@ public class Contacts_Activity extends Activity {
         });
 
 
-
-
         //list view pending
         listView2 = (ListView) findViewById(R.id.lv_pending);
         liste2 = new ArrayList<HashMap<String, String>>();
@@ -100,7 +98,7 @@ public class Contacts_Activity extends Activity {
         } catch (InterruptedException ex) {
         }
 
-        adapter2 = new SimpleAdapter(myContext,liste2,android.R.layout.simple_list_item_1,new String[]{"text1"},new int[]{android.R.id.text1});
+        adapter2 = new SimpleAdapter(myContext, liste2, android.R.layout.simple_list_item_1, new String[]{"text1"}, new int[]{android.R.id.text1});
 
         listView2.setAdapter(adapter2);
         listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -155,10 +153,6 @@ public class Contacts_Activity extends Activity {
                 boite.show();
             }
         });
-
-
-
-
 
 
         // Go to activité paramètres
@@ -282,12 +276,11 @@ public class Contacts_Activity extends Activity {
                 Log.e("httpGet ", e.toString(), e);
             }
 
-            Log.d("Resul",result);
+            Log.d("Resul", result);
             String resultArray[] = result.split("\"");
-           // String resultArray2[] = resultArray[1].split("}");
+            // String resultArray2[] = resultArray[1].split("}");
 
             //Log.d("Resultat",resultArray[3]);
-
 
 
             if (resultArray[3].equals("false")) {
@@ -296,9 +289,7 @@ public class Contacts_Activity extends Activity {
                         Toast.makeText(getApplicationContext(), "Contact inexistant", Toast.LENGTH_LONG).show();
                     }
                 });
-            }
-
-            else {
+            } else {
                 runOnUiThread(new Runnable() {
                     public void run() {
                         Toast.makeText(getApplicationContext(), "Contact ajouté", Toast.LENGTH_LONG).show();
@@ -351,7 +342,6 @@ public class Contacts_Activity extends Activity {
         }
 
     }
-
 
 
     //thread  pour confirmer ou rejeter une requete

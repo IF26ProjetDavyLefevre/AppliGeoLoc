@@ -129,14 +129,13 @@ public class CreateContact_Activity extends Activity implements LocationListener
 
             Log.d("result", result);
 
-            if (result.equals("false")){
+            if (result.equals("false")) {
                 runOnUiThread(new Runnable() {
                     public void run() {
                         Toast.makeText(CreateContact_Activity.this, "login déjà exisant, veuillez en choisir un autre !", Toast.LENGTH_LONG).show();
                     }
                 });
-            }
-            else {
+            } else {
                 runOnUiThread(new Runnable() {
                     public void run() {
                         Toast.makeText(CreateContact_Activity.this, "Compte Créé !", Toast.LENGTH_LONG).show();
