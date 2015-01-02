@@ -21,6 +21,7 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -29,6 +30,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 
@@ -108,9 +110,9 @@ public class Map_Activity extends Activity implements LocationListener {
         }
         me = new LatLng(latitude, longitude);
         myPosition = map.addMarker(new MarkerOptions()
-                                .position(me)
-                                .title("Me")
-                                .snippet("Your Position"));
+                .position(me)
+                .title("Me")
+                .snippet("Your Position"));
         String msg = "Latitude =" + latitude + ", Longitude = " + longitude;
         //Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         if (map != null && latitude != 0 && longitude != 0) {
@@ -118,17 +120,17 @@ public class Map_Activity extends Activity implements LocationListener {
             map.animateCamera(CameraUpdateFactory.zoomTo(10), 1500, null);
         }
 
-        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener(){
+        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             public boolean onMarkerClick(Marker marker) {
                 //on rentre ici seulement si ce n'est pas le marqueur de notre position, j'ai du mal d'ailleurs
-                if(marker.getPosition().latitude != me.latitude && marker.getPosition().longitude != me.longitude) {
+                if (marker.getPosition().latitude != me.latitude && marker.getPosition().longitude != me.longitude) {
                     final int idMarker = contactMarker.indexOf(marker);
 
                     AlertDialog.Builder boite;
                     boite = new AlertDialog.Builder(Map_Activity.this);
                     boite.setTitle("ShowPath");
                     boite.setIcon(R.drawable.ic_launcher);
-                    boite.setMessage("Affichez trajet jusqu'à"+tabUser[idMarker][0]+"");
+                    boite.setMessage("Affichez trajet jusqu'à" + tabUser[idMarker][0] + "");
 
                     boite.setPositiveButton("Refuser", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
@@ -192,7 +194,6 @@ public class Map_Activity extends Activity implements LocationListener {
 
     public class ThreadCreateMapActivity extends AsyncTask<String, Void, String> {
         protected String doInBackground(String... params) {
-            // http://pierredavy.com/login.php?login=davypier&password=if26
             //Il faudra modifier le appendPath pour qu'il aille taper sur le bon fichier php et penser au fait qu'il faudra aussi
             // aller chercher la liste des contacts de l'utilisateur en question et récupérer leurs coordonnées
             Uri.Builder uri = new Uri.Builder();
