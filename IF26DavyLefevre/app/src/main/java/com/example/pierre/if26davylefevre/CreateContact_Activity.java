@@ -75,8 +75,8 @@ public class CreateContact_Activity extends Activity implements LocationListener
         altitude = location.getAltitude();
         accuracy = location.getAccuracy();
 
-        String msg = "New location : Latitude = " + latitude + ", Longitude = " + longitude + ", Altitude = " + altitude + ", Accuracy = " + accuracy;
-        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+       /* String msg = "New location : Latitude = " + latitude + ", Longitude = " + longitude + ", Altitude = " + altitude + ", Accuracy = " + accuracy;
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();*/
     }
 
     public void onProviderDisabled(String provider) {
@@ -129,11 +129,20 @@ public class CreateContact_Activity extends Activity implements LocationListener
 
             Log.d("result", result);
 
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    Toast.makeText(CreateContact_Activity.this, "Compte Créé !", Toast.LENGTH_LONG).show();
-                }
-            });
+            if (result.equals("false")){
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(CreateContact_Activity.this, "login déjà exisant, veuillez en choisir un autre !", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+            else {
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(CreateContact_Activity.this, "Compte Créé !", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
 
             Intent backtoStart = new Intent(getApplicationContext(), Login.class);
             startActivity(backtoStart);
