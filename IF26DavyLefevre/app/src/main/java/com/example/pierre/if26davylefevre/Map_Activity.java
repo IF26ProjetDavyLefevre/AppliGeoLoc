@@ -1,6 +1,8 @@
 package com.example.pierre.if26davylefevre;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
@@ -11,6 +13,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -118,11 +122,31 @@ public class Map_Activity extends Activity implements LocationListener {
             public boolean onMarkerClick(Marker marker) {
                 //on rentre ici seulement si ce n'est pas le marqueur de notre position, j'ai du mal d'ailleurs
                 if(marker.getPosition().latitude != me.latitude && marker.getPosition().longitude != me.longitude) {
-                    int idMarker = contactMarker.indexOf(marker);
-                    Uri gmmIntentUri = Uri.parse("google.navigation:q=" + tabUser[idMarker][1] + "," + tabUser[idMarker][2] + "");
-                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                    mapIntent.setPackage("com.google.android.apps.maps");
-                    startActivity(mapIntent);
+                    final int idMarker = contactMarker.indexOf(marker);
+
+                    AlertDialog.Builder boite;
+                    boite = new AlertDialog.Builder(Map_Activity.this);
+                    boite.setTitle("ShowPath");
+                    boite.setIcon(R.drawable.ic_launcher);
+                    boite.setMessage("Affichez trajet jusqu'à"+tabUser[idMarker][0]+"");
+
+                    boite.setPositiveButton("Refuser", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //juste histoire de pouvoir quitter si finalement on ne veut pas
+                                }
+                            }
+                    );
+
+                    boite.setNegativeButton("Afficher", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Uri gmmIntentUri = Uri.parse("google.navigation:q=" + tabUser[idMarker][1] + "," + tabUser[idMarker][2] + "");
+                                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                                    mapIntent.setPackage("com.google.android.apps.maps");
+                                    startActivity(mapIntent);
+                                }
+                            }
+                    );
+                    boite.show();
                 }
                 return false;
             }
