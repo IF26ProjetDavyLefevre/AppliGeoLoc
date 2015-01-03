@@ -28,7 +28,7 @@ foreach ($_GET as $key => $value) {
 
 
 $login = $parameters['login'];
-$mdp = $parameters['password']);
+$mdp = $parameters['password'];
 $token = hash('sha256', time().$login.$password);
 $update = $parameters['update'];
 $latitude = $parameters['latitude'];
