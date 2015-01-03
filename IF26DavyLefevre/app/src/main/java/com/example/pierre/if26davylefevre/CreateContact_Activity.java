@@ -23,9 +23,12 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 
 public class CreateContact_Activity extends Activity implements LocationListener {
@@ -47,20 +50,20 @@ public class CreateContact_Activity extends Activity implements LocationListener
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, this);
         lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0, this);
 
+        final EditText login = (EditText) findViewById(R.id.T_Login);
+        final EditText password = (EditText) findViewById(R.id.T_Pwd);
         Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH) + 1;  // le mois de janvier est 0
         int day = c.get(Calendar.DAY_OF_MONTH);
         final String date = year + "-" + month + "-" + day;
-        Log.d("date:", date);
-        //String token = ;
 
         Button Bcreate = (Button) findViewById(R.id.Bcreate_send);
         Bcreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText login = (EditText) findViewById(R.id.T_Login);
-                EditText password = (EditText) findViewById(R.id.T_Pwd);
+                Log.d("login : ", login.getText().toString());
+                Log.d("Password : ", password.getText().toString());
                 threadCreate async = new threadCreate();
                 async.execute(login.getText().toString(), password.getText().toString(), "1", date, String.valueOf(latitude), String.valueOf(longitude), String.valueOf(altitude), String.valueOf(accuracy));
 
@@ -110,11 +113,38 @@ public class CreateContact_Activity extends Activity implements LocationListener
     //Thread pour la requete vers la base de données.
     public class threadCreate extends AsyncTask<String, Void, String> {
         protected String doInBackground(String... params) {
+
+            Calendar c = Calendar.getInstance();
+
+            int saltInt = (int)(Math.random()*100);
+            String saltDay = c.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.FRANCE);
+            String salt = saltDay+""+saltInt;
+
+
+            String passwordToEncrypt = params[1]+salt;
+
+            //cryptage du mdp en sha256
+            MessageDigest md = null;
+            try {
+                md = MessageDigest.getInstance("SHA-256");
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+            if (md != null) {
+                md.update(passwordToEncrypt.getBytes());
+            }
+            byte byteData[] = md.digest();
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < byteData.length; i++) {
+                sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            final String passwordEncrypted = sb.toString();
             // http://www.pierredavy.com/addnew.php
            /*   http://pierredavy.com/addnew.php?login=login&password=mdp&token=1&update=2014/12/02&coordonnees=12:23    */
             Uri.Builder uri = new Uri.Builder();
-            uri.scheme("http").authority("pierredavy.com").appendPath("addnew.php").appendQueryParameter("login", params[0]).appendQueryParameter("password", params[1]).appendQueryParameter("token", params[2])
-                    .appendQueryParameter("update", params[3]).appendQueryParameter("latitude", params[4]).appendQueryParameter("longitude", params[5]).appendQueryParameter("altitude", params[6]).appendQueryParameter("precise", params[7]);
+            uri.scheme("http").authority("pierredavy.com").appendPath("addnew.php").appendQueryParameter("login", params[0]).appendQueryParameter("password", passwordEncrypted).appendQueryParameter("token", params[2])
+                    .appendQueryParameter("update", params[3]).appendQueryParameter("latitude", params[4]).appendQueryParameter("longitude", params[5]).appendQueryParameter("altitude", params[6])
+                    .appendQueryParameter("precise", params[7]).appendQueryParameter("salt", salt);
             String url = uri.build().toString();
             Log.d("url: ", url);
 

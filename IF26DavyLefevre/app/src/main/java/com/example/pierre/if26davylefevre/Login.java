@@ -12,15 +12,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+import static java.util.Objects.hash;
 
 
 public class Login extends Activity {
@@ -31,13 +34,16 @@ public class Login extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        final EditText login = (EditText) findViewById(R.id.T_log);
+        final EditText password = (EditText) findViewById(R.id.T_password);
+
+
 
         Button BLogin = (Button) findViewById(R.id.BLogin);
         BLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText login = (EditText) findViewById(R.id.T_log);
-                EditText password = (EditText) findViewById(R.id.T_password);
+                Log.d("Password : ", password.getText().toString());
                 threadActivity DOC = new threadActivity();
                 DOC.execute(login.getText().toString(), password.getText().toString());
             }
@@ -55,11 +61,57 @@ public class Login extends Activity {
 
     public class threadActivity extends AsyncTask<String, Void, String> {
         protected String doInBackground(String... params) {
-            //C'est ici qu'il va falloir poser les bases de la sécurité concernant les données de connexion
-            //Salé le mdp, ...
+
             // http://pierredavy.com/login.php?login=davypier&password=if26
+            Uri.Builder uriSalt = new Uri.Builder();
+            uriSalt.scheme("http").authority("pierredavy.com").appendPath("login.php").appendQueryParameter("login", params[0]).appendQueryParameter("salt", "");
+            String urlSalt = uriSalt.build().toString();
+            String resultSalt = null;
+            try {
+                HttpClient HTTPCLlientSalt = new DefaultHttpClient();
+                HttpResponse HTTPResponseSalt = HTTPCLlientSalt.execute(new HttpGet(urlSalt));
+                resultSalt = EntityUtils.toString(HTTPResponseSalt.getEntity(), "utf8");
+            } catch (Exception e) {
+                Log.e("httpGet ", e.toString(), e);
+            }
+
+            String JSONResultSalt[];
+            String resultArraySalt[] = resultSalt.split(",");
+            JSONResultSalt = resultArraySalt[0].split(":");
+
+            String salt = null;
+            for (int j = 0; j < JSONResultSalt.length; j++) {
+                Log.d("Jsonresult :", JSONResultSalt[j]);
+            }
+            if (JSONResultSalt[1].equals("false")) {
+                JSONObject userSalt;
+                try {
+                    userSalt = new JSONObject(resultSalt);
+                    salt = userSalt.getJSONObject("user").getString("salt").toString();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            MessageDigest md = null;
+            try {
+                md = MessageDigest.getInstance("SHA-256");
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+            if (md != null) {
+                md.update((params[1]+salt).getBytes());
+            }
+            byte byteData[] = md.digest();
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < byteData.length; i++) {
+                sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            String passwordEncrypted = sb.toString();
+
             Uri.Builder uri = new Uri.Builder();
-            uri.scheme("http").authority("pierredavy.com").appendPath("login.php").appendQueryParameter("login", params[0]).appendQueryParameter("password", params[1]);
+            uri.scheme("http").authority("pierredavy.com").appendPath("login.php").appendQueryParameter("login", params[0]).appendQueryParameter("password", passwordEncrypted);
             String url = uri.build().toString();
             String result = null;
             try {
@@ -73,7 +125,7 @@ public class Login extends Activity {
             //debug dans la console
             Log.d("Result   : ", result);
 
-            String JSONResult[], JSONToken[];
+            String JSONResult[];
             String resultArray[] = result.split(",");
             JSONResult = resultArray[0].split(":");
 

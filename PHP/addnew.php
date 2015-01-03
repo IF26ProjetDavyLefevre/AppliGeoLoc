@@ -11,7 +11,8 @@ $parameters = array
     'latitude' => null,
     'longitude' => null,
     'altitude' => null,
-    'precise' => null
+    'precise' => null,
+	'salt' => null
 );
 
 $db = new BDD();
@@ -27,13 +28,14 @@ foreach ($_GET as $key => $value) {
 
 
 $login = $parameters['login'];
-$mdp = md5($parameters['password']);
-$token = md5(time() . $login . $password);
+$mdp = $parameters['password']);
+$token = hash('sha256', time().$login.$password);
 $update = $parameters['update'];
 $latitude = $parameters['latitude'];
 $longitude = $parameters['longitude'];
 $altitude = $parameters['altitude'];
 $precise = $parameters['precise'];
+$salt = $parameters['salt'];
 
 
 //si le contact n'existe pas on créer un nouveau contact sinon on renvoie faux
@@ -51,7 +53,7 @@ if (!empty($errors)) {
 }
 else{
     print_r($parameters);
-    $db->AddNewUser($login, $mdp, $token, $update, $latitude, $longitude, $altitude, $precise);
+    $db->AddNewUser($login, $mdp, $token, $update, $latitude, $longitude, $altitude, $precise, $salt);
 }
 
 

@@ -34,8 +34,8 @@ class BDD {
     }
 
     //ajoute un nouvel utilisateur dans la base de données
-    public function AddNewUser($login, $mdp, $token, $update, $latitude, $longitude, $altitude, $precise) {
-        $req = $this->pdo->prepare('INSERT INTO User(login,password, token, last_update,latitude,longitude,altitude,precise,visible) VALUES(:login, :password, :token, :last_update, :latitude, :longitude, :altitude, :precise, :visible)');
+    public function AddNewUser($login, $mdp, $token, $update, $latitude, $longitude, $altitude, $precise, $salt) {
+        $req = $this->pdo->prepare('INSERT INTO User(login,password, token, last_update,latitude,longitude,altitude,precise,visible, salt) VALUES(:login, :password, :token, :last_update, :latitude, :longitude, :altitude, :precise, :visible, :salt)');
         $result = $req->execute(array(
             'login' => $login,
             'password' => $mdp,
@@ -45,7 +45,8 @@ class BDD {
             ':longitude' => $longitude,
             ':altitude' => $altitude,
             ':precise' => $precise,
-            ':visible' => 1
+            ':visible' => 1,
+			':salt' => $salt
         ));
         if (!$result) {
             return false;
