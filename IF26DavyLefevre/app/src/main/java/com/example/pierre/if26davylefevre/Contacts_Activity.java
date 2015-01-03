@@ -79,6 +79,7 @@ public class Contacts_Activity extends Activity {
                 Uri gmmIntentUri = Uri.parse("google.navigation:q=" + tabContact[position][1] + "," + tabContact[position][2] + "");
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                 mapIntent.setPackage("com.google.android.apps.maps");
+                finish();
                 startActivity(mapIntent);
             }
         });
@@ -161,6 +162,7 @@ public class Contacts_Activity extends Activity {
             public void onClick(View v) {
                 Intent param_Activity = new Intent(getApplicationContext(), Param_Activity.class);
                 param_Activity.putExtra("Login", login);
+                finish();
                 startActivity(param_Activity);
             }
         });
@@ -171,6 +173,7 @@ public class Contacts_Activity extends Activity {
             public void onClick(View v) {
                 Intent map_Activity = new Intent(getApplicationContext(), Map_Activity.class);
                 map_Activity.putExtra("Login", login);
+                finish();
                 startActivity(map_Activity);
             }
         });

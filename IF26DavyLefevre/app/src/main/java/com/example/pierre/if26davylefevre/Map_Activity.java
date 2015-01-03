@@ -62,6 +62,7 @@ public class Map_Activity extends Activity implements LocationListener {
                 Intent contacts_Activity = new Intent(getApplicationContext(), Contacts_Activity.class);
                 contacts_Activity.putExtra("Login", login);
                 contacts_Activity.putExtra("Token", token);
+                finish();
                 startActivity(contacts_Activity);
             }
         });
@@ -72,6 +73,7 @@ public class Map_Activity extends Activity implements LocationListener {
                 Intent param_Activity = new Intent(getApplicationContext(), Param_Activity.class);
                 param_Activity.putExtra("Login", login);
                 param_Activity.putExtra("Token", token);
+                finish();
                 startActivity(param_Activity);
             }
         });
@@ -144,6 +146,7 @@ public class Map_Activity extends Activity implements LocationListener {
                                     Uri gmmIntentUri = Uri.parse("google.navigation:q=" + tabUser[idMarker][1] + "," + tabUser[idMarker][2] + "");
                                     Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                                     mapIntent.setPackage("com.google.android.apps.maps");
+                                    finish();
                                     startActivity(mapIntent);
                                 }
                             }

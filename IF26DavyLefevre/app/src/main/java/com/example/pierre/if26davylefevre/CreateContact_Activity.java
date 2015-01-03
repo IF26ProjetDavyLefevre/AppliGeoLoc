@@ -174,6 +174,7 @@ public class CreateContact_Activity extends Activity implements LocationListener
             }
 
             Intent backtoStart = new Intent(getApplicationContext(), Login.class);
+            finish();
             startActivity(backtoStart);
 
             return result;

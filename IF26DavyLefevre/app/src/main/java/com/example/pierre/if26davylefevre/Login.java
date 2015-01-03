@@ -143,6 +143,7 @@ public class Login extends Activity {
                     // token= JSONToken[1].substring(1, JSONToken[1].length() - 2);
                     mapActivity.putExtra("Login", params[0]);
                     mapActivity.putExtra("Token", user.getJSONObject("user").getString("token").toString());
+                    finish();
                     startActivity(mapActivity);
                 } catch (JSONException e) {
                     e.printStackTrace();

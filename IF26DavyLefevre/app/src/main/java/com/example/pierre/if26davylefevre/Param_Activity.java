@@ -51,6 +51,7 @@ public class Param_Activity extends Activity {
             public void onClick(View v) {
                 Intent contacts_Activity = new Intent(getApplicationContext(), Contacts_Activity.class);
                 contacts_Activity.putExtra("Login", login);
+                finish();
                 startActivity(contacts_Activity);
             }
         });
@@ -60,6 +61,7 @@ public class Param_Activity extends Activity {
             public void onClick(View v) {
                 Intent map_Activity = new Intent(getApplicationContext(), Map_Activity.class);
                 map_Activity.putExtra("Login", login);
+                finish();
                 startActivity(map_Activity);
             }
         });
