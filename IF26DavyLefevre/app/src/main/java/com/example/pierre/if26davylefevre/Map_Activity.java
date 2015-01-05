@@ -67,6 +67,15 @@ public class Map_Activity extends Activity implements LocationListener {
             }
         });
 
+        Button btnDeco = (Button) findViewById(R.id.btnDeco);
+        btnDeco.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent login = new Intent(getApplicationContext(), Login.class);
+                finish();
+                startActivity(login);
+            }
+        });
+
         Button btnParam = (Button) findViewById(R.id.btnParam);
         btnParam.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -132,7 +141,7 @@ public class Map_Activity extends Activity implements LocationListener {
                     boite = new AlertDialog.Builder(Map_Activity.this);
                     boite.setTitle("ShowPath");
                     boite.setIcon(R.drawable.ic_launcher);
-                    boite.setMessage("Affichez trajet jusqu'à" + tabUser[idMarker][0] + "");
+                    boite.setMessage("Affichez trajet jusqu'à " + tabUser[idMarker][0] + "");
 
                     boite.setPositiveButton("Refuser", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {

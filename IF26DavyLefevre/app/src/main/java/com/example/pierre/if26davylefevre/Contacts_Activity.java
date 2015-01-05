@@ -116,10 +116,8 @@ public class Contacts_Activity extends Activity {
                             public void onClick(DialogInterface dialog, int which) {
                                 ThreadSetRequest threadSet = new ThreadSetRequest();
                                 threadSet.execute(loginContact, login, "Refused");
-
                                 try {
                                     synchronized (this) {
-                                        //on attend 3 secondes que la tâche asynchrone finisse son travail de récupération des noms
                                         wait(2000);
                                     }
                                 } catch (InterruptedException ex) {
@@ -132,20 +130,17 @@ public class Contacts_Activity extends Activity {
                 boite.setNegativeButton("Accepter", new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog, int which) {
-
-
                                 ThreadSetRequest threadSet = new ThreadSetRequest();
                                 threadSet.execute(loginContact, login, "Accepted");
-
                                 try {
                                     synchronized (this) {
-                                        //on attend 3 secondes que la tâche asynchrone finisse son travail de récupération des noms
                                         wait(2000);
                                     }
                                 } catch (InterruptedException ex) {
                                 }
-
-                                Toast.makeText(getApplicationContext(), "Contact ajouté", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Contact ajouté...actualisation", Toast.LENGTH_LONG).show();
+                                finish();
+                                startActivity(getIntent());
 
                             }
                         }
@@ -164,6 +159,15 @@ public class Contacts_Activity extends Activity {
                 param_Activity.putExtra("Login", login);
                 finish();
                 startActivity(param_Activity);
+            }
+        });
+
+        Button btnDeco = (Button) findViewById(R.id.btnDeco);
+        btnDeco.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent login = new Intent(getApplicationContext(), Login.class);
+                finish();
+                startActivity(login);
             }
         });
 

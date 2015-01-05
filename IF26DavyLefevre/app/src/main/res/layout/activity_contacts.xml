@@ -21,6 +21,16 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Déconnexion"
+        android:id="@+id/btnDeco"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/btnMap"
+        android:layout_toStartOf="@+id/btnParam"
+        android:layout_toLeftOf="@+id/btnParam" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Param."
         android:id="@+id/btnParam"
         android:layout_alignParentTop="true"

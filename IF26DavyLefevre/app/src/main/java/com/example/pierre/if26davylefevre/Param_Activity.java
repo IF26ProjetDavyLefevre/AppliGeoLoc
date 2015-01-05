@@ -56,6 +56,15 @@ public class Param_Activity extends Activity {
             }
         });
 
+        Button btnDeco = (Button) findViewById(R.id.btnDeco);
+        btnDeco.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent login = new Intent(getApplicationContext(), Login.class);
+                finish();
+                startActivity(login);
+            }
+        });
+
         Button btnMap = (Button) findViewById(R.id.btnMap);
         btnMap.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

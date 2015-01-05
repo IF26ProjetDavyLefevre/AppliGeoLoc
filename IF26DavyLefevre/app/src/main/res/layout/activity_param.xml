@@ -20,6 +20,15 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Déconnexion"
+        android:id="@+id/btnDeco"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/btnMap"
+        android:layout_toLeftOf="@+id/btnContacts"
+        android:layout_toStartOf="@+id/btnMap" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Contacts"
         android:id="@+id/btnContacts"
         android:layout_alignParentTop="true"
