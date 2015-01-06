@@ -15,7 +15,7 @@ $db->DB();
 
 
 
-$sql = "SELECT visible FROM User WHERE login ='". $parameters[':login']."'";
+$sql = "SELECT visible FROM User WHERE login ='" . $parameters[':login'] . "';";
 $req = $db->pdo->query($sql);
 $result = $req->fetch(PDO::FETCH_ASSOC);
 
@@ -25,7 +25,6 @@ if ($result !== false) {
     $json = array(
         'error' => false,
         'visible' => $result
-        
     );
 }
 

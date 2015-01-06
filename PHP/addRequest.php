@@ -24,7 +24,7 @@ $login = $parameters['login1'];
 $login2 = $parameters['login2'];
 //print_r($parameters);
 //on vérifie que l'utilisateur existe bien
-$sql = "SELECT * FROM User WHERE login ='" . $parameters['login2'] . "'";
+$sql = "SELECT * FROM User WHERE login ='" . $parameters['login2'] . " ';";
 $req = $db->pdo->query($sql);
 $result = $req->fetch(PDO::FETCH_ASSOC);
 

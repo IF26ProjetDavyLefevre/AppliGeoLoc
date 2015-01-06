@@ -12,7 +12,7 @@ $parameters = array
     'longitude' => null,
     'altitude' => null,
     'precise' => null,
-	'salt' => null
+    'salt' => null
 );
 
 $db = new BDD();
@@ -29,7 +29,7 @@ foreach ($_GET as $key => $value) {
 
 $login = $parameters['login'];
 $mdp = $parameters['password'];
-$token = hash('sha256', time().$login.$password);
+$token = hash('sha256', time() . $login . $password);
 $update = $parameters['update'];
 $latitude = $parameters['latitude'];
 $longitude = $parameters['longitude'];
@@ -39,7 +39,7 @@ $salt = $parameters['salt'];
 
 
 //si le contact n'existe pas on créer un nouveau contact sinon on renvoie faux
-$sql = "SELECT  login FROM User WHERE login = '" . $login. "'";
+$sql = "SELECT  login FROM User WHERE login = '" . $login . " ;'";
 
 $req = $db->pdo->query($sql);
 $result = $req->fetchall(PDO::FETCH_ASSOC);
@@ -48,15 +48,8 @@ $errors = array_filter($result);
 if (!empty($errors)) {
 
     echo'false';
-    
-    
-}
-else{
+} else {
     print_r($parameters);
     $db->AddNewUser($login, $mdp, $token, $update, $latitude, $longitude, $altitude, $precise, $salt);
 }
-
-
-
-
 ?>

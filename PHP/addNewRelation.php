@@ -23,7 +23,7 @@ $login2 = $parameters['login2'];
 
 
 
-$sql = "SELECT * FROM `Relation` WHERE `login_user1`='" . $login1 . "' AND `login_user2`='" . $login2 . "' OR `login_user1`='" . $login2 . "' AND `login_user2`='" . $login1 . "'";
+$sql = "SELECT * FROM `Relation` WHERE `login_user1`='" . $login1 . "' AND `login_user2`='" . $login2 . "' OR `login_user1`='" . $login2 . "' AND `login_user2`='" . $login1 . "';";
 
 $req = $db->pdo->query($sql);
 $result = $req->fetchall(PDO::FETCH_ASSOC);
