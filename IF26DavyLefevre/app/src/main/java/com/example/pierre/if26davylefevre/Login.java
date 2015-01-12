@@ -1,7 +1,10 @@
 package com.example.pierre.if26davylefevre;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -39,22 +42,46 @@ public class Login extends Activity {
 
         Button BLogin = (Button) findViewById(R.id.BLogin);
         BLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("Password : ", password.getText().toString());
-                threadActivity DOC = new threadActivity();
-                DOC.execute(login.getText().toString(), password.getText().toString());
-            }
-        });
+                                      @Override
+                                      public void onClick(View v) {
+                                          if (isNetworkAvailable(getApplicationContext())) {
+                                              threadActivity DOC = new threadActivity();
+                                              DOC.execute(login.getText().toString(), password.getText().toString());
+                                          } else {
+                                              Toast.makeText(getApplicationContext(), "Vous n'êtes pas connecté à internet. Veuillez vous connecter.", Toast.LENGTH_LONG).show();
+                                          }
+                                      }
+                                  }
+
+        );
 
         Button Bcreate = (Button) findViewById(R.id.BCreate);
         Bcreate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent pageCreateUser = new Intent(getApplicationContext(), CreateContact_Activity.class);
-                startActivity(pageCreateUser);
-            }
-        });
+
+                                       @Override
+                                       public void onClick(View v) {
+                                           if (isNetworkAvailable(getApplicationContext())) {
+                                               Intent pageCreateUser = new Intent(getApplicationContext(), CreateContact_Activity.class);
+                                               startActivity(pageCreateUser);
+                                           } else {
+                                               Toast.makeText(getApplicationContext(), "Vous n'êtes pas connecté à internet. Veuillez vous connecter.", Toast.LENGTH_LONG).show();
+                                           }
+                                       }
+                                   }
+
+        );
+    }
+
+    //fonction permettant de vérifier si le téléphone est connecté à internet
+
+    public boolean isNetworkAvailable(Context context) {
+        boolean value = false;
+        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = manager.getActiveNetworkInfo();
+        if (info != null && info.isAvailable()) {
+            value = true;
+        }
+        return value;
     }
 
     //thread qui permet l'accès à la base de données pour le login
