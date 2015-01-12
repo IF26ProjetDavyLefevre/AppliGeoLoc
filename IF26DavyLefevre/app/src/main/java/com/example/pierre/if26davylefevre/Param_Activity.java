@@ -39,7 +39,6 @@ public class Param_Activity extends Activity {
         thread.execute(String.valueOf(login));
         try {
             synchronized (this) {
-                //on attend 3 secondes que la tâche asynchrone finisse son travail de récupération des noms
                 wait(2000);
             }
         } catch (InterruptedException ex) {
