@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -28,15 +29,12 @@ import static java.util.Objects.hash;
 
 public class Login extends Activity {
 
-    // Context myContext= getApplicationContext();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         final EditText login = (EditText) findViewById(R.id.T_log);
         final EditText password = (EditText) findViewById(R.id.T_password);
-
 
 
         Button BLogin = (Button) findViewById(R.id.BLogin);
@@ -59,10 +57,10 @@ public class Login extends Activity {
         });
     }
 
+    //thread qui permet l'accès à la base de données pour le login
     public class threadActivity extends AsyncTask<String, Void, String> {
         protected String doInBackground(String... params) {
 
-            // http://pierredavy.com/login.php?login=davypier&password=if26
             Uri.Builder uriSalt = new Uri.Builder();
             uriSalt.scheme("http").authority("pierredavy.com").appendPath("login.php").appendQueryParameter("login", params[0]).appendQueryParameter("salt", "");
             String urlSalt = uriSalt.build().toString();
@@ -101,7 +99,7 @@ public class Login extends Activity {
                 e.printStackTrace();
             }
             if (md != null) {
-                md.update((params[1]+salt).getBytes());
+                md.update((params[1] + salt).getBytes());
             }
             byte byteData[] = md.digest();
             StringBuffer sb = new StringBuffer();

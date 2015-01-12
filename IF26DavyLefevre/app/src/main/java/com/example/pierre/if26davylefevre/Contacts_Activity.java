@@ -106,9 +106,7 @@ public class Contacts_Activity extends Activity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long arg3) {
                 final String loginContact = tabContact2[position];
                 AlertDialog.Builder boite;
-                // final EditText input = new EditText(Contacts_Activity.this);
                 boite = new AlertDialog.Builder(Contacts_Activity.this);
-                //boite.setView(input);
                 boite.setTitle("boite de dialogue ");
                 boite.setIcon(R.drawable.ic_launcher);
                 boite.setMessage("On vous a ajouté comme relation");
@@ -285,10 +283,6 @@ public class Contacts_Activity extends Activity {
 
             Log.d("Resul", result);
             String resultArray[] = result.split("\"");
-            // String resultArray2[] = resultArray[1].split("}");
-
-            //Log.d("Resultat",resultArray[3]);
-
 
             if (resultArray[3].equals("false")) {
                 runOnUiThread(new Runnable() {
