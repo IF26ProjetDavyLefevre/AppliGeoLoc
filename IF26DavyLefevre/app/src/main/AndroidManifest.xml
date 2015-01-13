@@ -21,10 +21,11 @@
         android:allowBackup="true"
         android:icon="@drawable/u"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".Login"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,7 +34,8 @@
         </activity>
         <activity
             android:name=".CreateContact_Activity"
-            android:label="Création de compte" />
+            android:label="Création de compte"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
@@ -41,15 +43,18 @@
 
         <activity
             android:name=".Map_Activity"
-            android:label="Map" >
+            android:label="Map"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".Contacts_Activity"
-            android:label="Liste des contacts" >
+            android:label="Liste des contacts"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".Param_Activity"
-            android:label="Paramètres" >
+            android:label="Paramètres"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 
