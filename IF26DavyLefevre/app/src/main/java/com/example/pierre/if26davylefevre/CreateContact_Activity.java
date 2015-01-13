@@ -51,9 +51,10 @@ public class CreateContact_Activity extends Activity implements LocationListener
 
         final EditText login = (EditText) findViewById(R.id.T_Login);
         final EditText password = (EditText) findViewById(R.id.T_Pwd);
+        final EditText passwordBis = (EditText) findViewById(R.id.T_PwdBis);
         Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH) + 1;  // le mois de janvier est 0
+        int month = c.get(Calendar.MONTH) + 1;
         int day = c.get(Calendar.DAY_OF_MONTH);
         final String date = year + "-" + month + "-" + day;
 
@@ -63,8 +64,9 @@ public class CreateContact_Activity extends Activity implements LocationListener
             public void onClick(View v) {
                 Log.d("login : ", login.getText().toString());
                 Log.d("Password : ", password.getText().toString());
-                if (login.getText().toString().equals("") || password.getText().toString().equals("")) {
-                    if(login.getText().toString().equals("") && password.getText().toString().equals("")){
+                Log.d("Password Bis : ", passwordBis.getText().toString());
+                if (login.getText().toString().equals("") || password.getText().toString().equals("") || passwordBis.getText().toString().equals("")) {
+                    if(login.getText().toString().equals("") && password.getText().toString().equals("") && passwordBis.getText().toString().equals("")){
                         Toast.makeText(getApplicationContext(),
                                 "Veuillez compléter les champs Login et Password",
                                 Toast.LENGTH_SHORT).show();
@@ -72,9 +74,14 @@ public class CreateContact_Activity extends Activity implements LocationListener
                         Toast.makeText(getApplicationContext(),
                                 "Veuillez compléter le champ Login",
                                 Toast.LENGTH_SHORT).show();
-                    }else if(!login.getText().toString().equals("") && password.getText().toString().equals("")){
+                    }else if((!login.getText().toString().equals("") && password.getText().toString().equals("")) ||
+                            (!login.getText().toString().equals("") && passwordBis.getText().toString().equals(""))){
                         Toast.makeText(getApplicationContext(),
-                                "Veuillez compléter le champ Password",
+                                "Veuillez compléter les champs Password",
+                                Toast.LENGTH_SHORT).show();
+                    }else if(!password.getText().toString().equals(passwordBis.getText().toString())){
+                        Toast.makeText(getApplicationContext(),
+                                "Les 2 Password doivent être identiques!",
                                 Toast.LENGTH_SHORT).show();
                     }
                 }else{
