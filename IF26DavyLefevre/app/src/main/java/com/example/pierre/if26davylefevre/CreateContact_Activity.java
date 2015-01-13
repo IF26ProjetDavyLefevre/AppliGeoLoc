@@ -63,9 +63,25 @@ public class CreateContact_Activity extends Activity implements LocationListener
             public void onClick(View v) {
                 Log.d("login : ", login.getText().toString());
                 Log.d("Password : ", password.getText().toString());
-                threadCreate async = new threadCreate();
-                async.execute(login.getText().toString(), password.getText().toString(), "1", date, String.valueOf(latitude), String.valueOf(longitude), String.valueOf(altitude), String.valueOf(accuracy));
-
+                if (login.getText().toString().equals("") || password.getText().toString().equals("")) {
+                    if(login.getText().toString().equals("") && password.getText().toString().equals("")){
+                        Toast.makeText(getApplicationContext(),
+                                "Veuillez compléter les champs Login et Password",
+                                Toast.LENGTH_SHORT).show();
+                    }else if(login.getText().toString().equals("") && !password.getText().toString().equals("")){
+                        Toast.makeText(getApplicationContext(),
+                                "Veuillez compléter le champ Login",
+                                Toast.LENGTH_SHORT).show();
+                    }else if(!login.getText().toString().equals("") && password.getText().toString().equals("")){
+                        Toast.makeText(getApplicationContext(),
+                                "Veuillez compléter le champ Password",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    threadCreate async = new threadCreate();
+                    async.execute(login.getText().toString(), password.getText().toString(), "1", date,
+                            String.valueOf(latitude), String.valueOf(longitude), String.valueOf(altitude), String.valueOf(accuracy));
+                }
             }
         });
 

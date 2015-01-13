@@ -7,9 +7,9 @@
 
     <ImageView
         android:id="@+id/form"
-        android:layout_width="134dp"
-        android:layout_height="181dp"
-        android:layout_marginTop="@dimen/normal_padding"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small_padding"
         android:src="@drawable/form"
         android:layout_gravity="center"/>
 
