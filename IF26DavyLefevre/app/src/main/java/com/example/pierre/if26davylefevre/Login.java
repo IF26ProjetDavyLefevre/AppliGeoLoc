@@ -45,8 +45,24 @@ public class Login extends Activity {
                                       @Override
                                       public void onClick(View v) {
                                           if (isNetworkAvailable(getApplicationContext())) {
-                                              threadActivity DOC = new threadActivity();
-                                              DOC.execute(login.getText().toString(), password.getText().toString());
+                                              if (login.getText().toString().equals("") || password.getText().toString().equals("")) {
+                                                  if(login.getText().toString().equals("") && password.getText().toString().equals("")){
+                                                      Toast.makeText(getApplicationContext(),
+                                                              "Veuillez compléter les champs Login et Password",
+                                                              Toast.LENGTH_SHORT).show();
+                                                  }else if(login.getText().toString().equals("") && !password.getText().toString().equals("")){
+                                                      Toast.makeText(getApplicationContext(),
+                                                              "Veuillez compléter le champ Login",
+                                                              Toast.LENGTH_SHORT).show();
+                                                  }else if(!login.getText().toString().equals("") && password.getText().toString().equals("")){
+                                                      Toast.makeText(getApplicationContext(),
+                                                              "Veuillez compléter le champ Password",
+                                                              Toast.LENGTH_SHORT).show();
+                                                  }
+                                              }else {
+                                                  threadActivity DOC = new threadActivity();
+                                                  DOC.execute(login.getText().toString(), password.getText().toString());
+                                              }
                                           } else {
                                               Toast.makeText(getApplicationContext(), "Vous n'êtes pas connecté à internet. Veuillez vous connecter.", Toast.LENGTH_LONG).show();
                                           }
