@@ -32,7 +32,8 @@
         android:id="@+id/T_Login"
         android:hint="Entrez un login"
         android:layout_marginTop="@dimen/small_padding"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        />
 
 
 
@@ -80,6 +81,7 @@
         android:text="Créer!"
         android:id="@+id/Bcreate_send"
         android:layout_marginTop="@dimen/small_padding"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:background="@drawable/shape"/>
 
 </LinearLayout>

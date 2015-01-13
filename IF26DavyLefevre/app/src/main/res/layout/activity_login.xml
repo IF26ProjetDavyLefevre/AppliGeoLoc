@@ -57,15 +57,17 @@
         android:text="Login"
         android:id="@+id/BLogin"
         android:layout_marginTop="@dimen/small_padding"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:background="@drawable/shape" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="125dp"
         android:layout_height="wrap_content"
         android:text="Créer Compte"
         android:id="@+id/BCreate"
         android:layout_marginTop="@dimen/small_padding"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:background="@drawable/shape" />
 
 
 </LinearLayout>

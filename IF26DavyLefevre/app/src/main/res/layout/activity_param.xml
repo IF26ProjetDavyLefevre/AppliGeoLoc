@@ -15,7 +15,8 @@
         android:id="@+id/btnMap"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:background="@drawable/shape"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -25,7 +26,8 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/btnMap"
         android:layout_toLeftOf="@+id/btnContacts"
-        android:layout_toStartOf="@+id/btnMap" />
+        android:layout_toStartOf="@+id/btnMap"
+        android:background="@drawable/shape"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,7 +35,8 @@
         android:id="@+id/btnContacts"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/shape"/>
 
     <CheckBox
         android:layout_width="wrap_content"
