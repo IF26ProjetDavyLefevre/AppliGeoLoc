@@ -29,10 +29,15 @@ import java.security.NoSuchAlgorithmException;
 
 import static java.util.Objects.hash;
 
-
+/**
+ * Cette classe permet la création de la vue représentant l'activité de login de l'application NearU
+ */
 public class Login extends Activity {
 
-    @Override
+    /**
+     * 
+     * @param savedInstanceState
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);

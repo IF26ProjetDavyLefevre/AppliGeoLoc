@@ -106,7 +106,7 @@ public class Contacts_Activity extends Activity {
                 final String loginContact = tabContact2[position];
                 AlertDialog.Builder boite;
                 boite = new AlertDialog.Builder(Contacts_Activity.this);
-                boite.setTitle("boite de dialogue ");
+                boite.setTitle("Nouvelle invitation reçue!");
                 boite.setIcon(R.drawable.ic_launcher);
                 boite.setMessage("On vous a ajouté comme relation");
                 boite.setPositiveButton("Refuser", new DialogInterface.OnClickListener() {
@@ -248,12 +248,12 @@ public class Contacts_Activity extends Activity {
                     tabContact[i][0] = conv.getJSONObject(i).getString("login").toString();
                     tabContact[i][1] = conv.getJSONObject(i).getString("latitude").toString();
                     tabContact[i][2] = conv.getJSONObject(i).getString("longitude").toString();
-                    //tabContact[i][3] = conv.getJSONObject(i).getString("last_update").toString();
+                    tabContact[i][3] = conv.getJSONObject(i).getString("last_update").toString();
                 }
                 for (int i = 0; i < tabContact.length; i++) {
                     element = new HashMap<String, String>();
                     element.put("text1", tabContact[i][0]);
-                    element.put("text2", "");
+                    element.put("text2", tabContact[i][3]);
                     liste.add(element);
                 }
                 Log.d("liste :", liste.toString());
