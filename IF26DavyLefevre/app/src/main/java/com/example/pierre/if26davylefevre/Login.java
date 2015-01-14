@@ -35,7 +35,9 @@ import static java.util.Objects.hash;
 public class Login extends Activity {
 
     /**
-     * 
+     * Cette méthode est appelée à la création de l'activité login, elle gère la création de l'affichage
+     * et certains effets associés au clic sur les boutons (création des threads)
+     *
      * @param savedInstanceState
      */
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,21 +52,7 @@ public class Login extends Activity {
                                       @Override
                                       public void onClick(View v) {
                                           if (isNetworkAvailable(getApplicationContext())) {
-                                              if (login.getText().toString().equals("") || password.getText().toString().equals("")) {
-                                                  if(login.getText().toString().equals("") && password.getText().toString().equals("")){
-                                                      Toast.makeText(getApplicationContext(),
-                                                              "Veuillez compléter les champs Login et Password",
-                                                              Toast.LENGTH_SHORT).show();
-                                                  }else if(login.getText().toString().equals("") && !password.getText().toString().equals("")){
-                                                      Toast.makeText(getApplicationContext(),
-                                                              "Veuillez compléter le champ Login",
-                                                              Toast.LENGTH_SHORT).show();
-                                                  }else if(!login.getText().toString().equals("") && password.getText().toString().equals("")){
-                                                      Toast.makeText(getApplicationContext(),
-                                                              "Veuillez compléter le champ Password",
-                                                              Toast.LENGTH_SHORT).show();
-                                                  }
-                                              }else {
+                                              if (!isConnexionInfoNOK(login.getText().toString(),password.getText().toString())) {
                                                   threadActivity DOC = new threadActivity();
                                                   DOC.execute(login.getText().toString(), password.getText().toString());
                                               }
@@ -93,8 +81,12 @@ public class Login extends Activity {
         );
     }
 
-    //fonction permettant de vérifier si le téléphone est connecté à internet
-
+    /**
+     * Cette méthode permet de tester si les services de connexion sont actuellement opérationnels sur le smartphone
+     *
+     * @param context
+     * @return boolean
+     */
     public boolean isNetworkAvailable(Context context) {
         boolean value = false;
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -105,7 +97,37 @@ public class Login extends Activity {
         return value;
     }
 
-    //thread qui permet l'accès à la base de données pour le login
+    /**
+     * Cette méthode permet de tester si les informations saisies par l'utilisateur le sont correctement
+     *
+     * @param login
+     * @param password
+     * @return boolean
+     */
+    public boolean isConnexionInfoNOK(String login, String password){
+        boolean value = false;
+        if (login.equals("") || password.equals("")) {
+            value = true;
+            if (login.equals("") && password.equals("")) {
+                Toast.makeText(getApplicationContext(),
+                        "Veuillez compléter les champs Login et Password",
+                        Toast.LENGTH_SHORT).show();
+            } else if (login.equals("") && !password.equals("")) {
+                Toast.makeText(getApplicationContext(),
+                        "Veuillez compléter le champ Login",
+                        Toast.LENGTH_SHORT).show();
+            } else if (!login.equals("") && password.equals("")) {
+                Toast.makeText(getApplicationContext(),
+                        "Veuillez compléter le champ Password",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
+        return value;
+    }
+
+    /**
+     * Cette classe interne "thread" permet la gestion de la connexion de l'utilisateur à l'application
+     */
     public class threadActivity extends AsyncTask<String, Void, String> {
         protected String doInBackground(String... params) {
 
