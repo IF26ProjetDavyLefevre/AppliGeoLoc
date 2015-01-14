@@ -79,7 +79,6 @@ public class Contacts_Activity extends Activity {
                 Uri gmmIntentUri = Uri.parse("google.navigation:q=" + tabContact[position][1] + "," + tabContact[position][2] + "");
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                 mapIntent.setPackage("com.google.android.apps.maps");
-                finish();
                 startActivity(mapIntent);
             }
         });
@@ -240,19 +239,21 @@ public class Contacts_Activity extends Activity {
                 Log.e("httpGet ", e.toString(), e);
             }
             try {
+                Log.d("content :", content);
                 JSONObject contacts = new JSONObject(content);
                 JSONArray conv = contacts.getJSONArray("user");
-                tabContact = new String[conv.length()][3];
+                tabContact = new String[conv.length()][4];
                 for (int i = 0; i < conv.length(); i++) {
 
                     tabContact[i][0] = conv.getJSONObject(i).getString("login").toString();
                     tabContact[i][1] = conv.getJSONObject(i).getString("latitude").toString();
                     tabContact[i][2] = conv.getJSONObject(i).getString("longitude").toString();
+                    //tabContact[i][3] = conv.getJSONObject(i).getString("last_update").toString();
                 }
                 for (int i = 0; i < tabContact.length; i++) {
                     element = new HashMap<String, String>();
                     element.put("text1", tabContact[i][0]);
-                    element.put("text2", tabContact[i][1]);
+                    element.put("text2", "");
                     liste.add(element);
                 }
                 Log.d("liste :", liste.toString());

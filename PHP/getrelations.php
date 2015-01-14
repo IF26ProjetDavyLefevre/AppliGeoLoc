@@ -16,11 +16,11 @@ $db->DB();
 
 
 $sql = "SELECT * 
-        FROM((SELECT login, latitude, longitude
-	FROM (SELECT CASE WHEN login_user1 = '". $parameters[':login'] ."' THEN login_user2 ELSE login_user1 END AS login
-			FROM Relation 
-			WHERE login_user1 = '". $parameters[':login'] ."' OR login_user2 = '". $parameters[':login'] ."') AS tblLoginContact 
-	LEFT JOIN User USING (login)
+        FROM((SELECT login, latitude, longitude, last_update
+					FROM (SELECT CASE WHEN login_user1 = '". $parameters[':login'] ."' THEN login_user2 ELSE login_user1 END AS login
+								FROM Relation 
+								WHERE login_user1 = '". $parameters[':login'] ."' OR login_user2 = '". $parameters[':login'] ."') AS tblLoginContact 
+					LEFT JOIN User USING (login)
         )) as tbltotal";
 
 

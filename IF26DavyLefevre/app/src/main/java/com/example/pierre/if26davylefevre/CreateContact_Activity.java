@@ -65,7 +65,8 @@ public class CreateContact_Activity extends Activity implements LocationListener
                 Log.d("login : ", login.getText().toString());
                 Log.d("Password : ", password.getText().toString());
                 Log.d("Password Bis : ", passwordBis.getText().toString());
-                if (login.getText().toString().equals("") || password.getText().toString().equals("") || passwordBis.getText().toString().equals("")) {
+                if ((login.getText().toString().equals("") || password.getText().toString().equals("") || passwordBis.getText().toString().equals("")) ||
+                        !password.getText().toString().equals(passwordBis.getText().toString()) ) {
                     if(login.getText().toString().equals("") && password.getText().toString().equals("") && passwordBis.getText().toString().equals("")){
                         Toast.makeText(getApplicationContext(),
                                 "Veuillez compléter les champs Login et Password",
